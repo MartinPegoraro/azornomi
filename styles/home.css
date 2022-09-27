@@ -1,0 +1,35 @@
+.boxHome{
+    border: 1px solid white;
+    padding: 3px;
+    height: 100%;
+    margin-bottom: 7px;
+}
+.buttonNavBar{
+    width: 90%;
+    height: 80%;
+    background: linear-gradient(to right, red  90%, green);
+    background-color: red;
+    color: white;
+    border-right: 3px solid green;
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+.search{
+    width: 98%; 
+    height: 90%;
+    border-radius: 10px;
+    border: 0.5px solid red;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.iconButton{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
