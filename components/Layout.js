@@ -3,7 +3,7 @@ import Container from '@mui/material/Container';
 import NavBar from './NavBar';
 
 
-export default function Layout({ children, pageName }) {
+export default function Layout({ children, stateUser }) {
     return (
         <Container disableGutters={true}
             sx={{
@@ -13,8 +13,7 @@ export default function Layout({ children, pageName }) {
                 maxWidth: "100vw"
             }}
         >
-            <NavBar title={pageName} />
-
+            <NavBar stateUser={stateUser} />
             {children}
         </Container>
     )

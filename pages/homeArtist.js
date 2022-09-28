@@ -4,12 +4,11 @@ import Header from '../components/Header'
 import Artist from '../components/Artist'
 
 export default function homeArtist() {
-    var name = "Sucursal AA"
+    var stateUser = "artista"
     return (
         <>
             <Header />
-
-            <Layout pageName={name}>
+            <Layout stateUser={stateUser}>
                 <Artist />
             </Layout>
         </>

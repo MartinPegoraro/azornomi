@@ -4,11 +4,10 @@
     height: 100%;
     margin-bottom: 7px;
 }
-.buttonNavBar{
+.buttonNavBarTatuador{
     width: 90%;
     height: 80%;
-    background: linear-gradient(to right, red  90%, green);
-    background-color: red;
+    background: linear-gradient(to right, rgb(200, 108, 108)  90%, rgb(59, 161, 59));
     color: white;
     border-right: 3px solid green;
     border-radius: 10px;
@@ -17,11 +16,25 @@
     transform: translate(-50%, -50%);
     
 }
-.search{
-    width: 98%; 
-    height: 90%;
+.buttonNavBarLienzo{
+    width: 90%;
+    height: 80%;
+    background: linear-gradient(to right,rgb(59, 161, 59) 90%, rgb(200, 108, 108));
+    color: white;
+    border-right: 3px solid rgb(200, 108, 108);
     border-radius: 10px;
-    border: 0.5px solid red;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.search{
+   text-transform: lowercase;
+    justify-content: left;
+    width: 98%; 
+    color: rgb(55, 54, 54);
+    height: 80%;
+    border-radius: 10px;
+    border: 0.5px solid rgb(124, 124, 124);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -32,4 +45,19 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.gridContainer {
+    display: grid;                                          /* Estilo pinteres*/
+    grid-template-columns: repeat(auto-fill, 230px);        /* Estilo pinteres*/
+    gap: 20px;                                              /* Estilo pinteres*/
+    justify-content: center;                                /* Estilo pinteres*/
+
+    grid-template-rows: masonry;                            /* Estilo pinteres*/
+}
+
+.buttonImg{
+    width: 230px; /* Estilo pinteres*/
+    padding: 1px;
+    border-radius: 3px;
 }

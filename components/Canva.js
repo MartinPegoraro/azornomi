@@ -7,7 +7,7 @@ export default function Artist() {
     const [dummyData, setDummyData] = useState([])
 
     const fetchData = async () => {
-        const res = await fetch('/api/dummyData') // Se vuelve a traer todos los datosControlador
+        const res = await fetch('/api/dummyDataLienzo') // Se vuelve a traer todos los datosControlador
         const data = await res.json()
         var newData = data
         setDummyData(newData)
@@ -21,14 +21,13 @@ export default function Artist() {
         <div>
 
             <Box className='gridContainer'>
-                {dummyData.map((art) => {
+                {dummyData.map((lienzo) => {
                     return (
-                        <List key={art.artistId}>
+                        <List key={lienzo.lienzoId}>
                             {
-                                art.artistImg.map((img) => {
-                                    // console.log(img);
+                                lienzo.lienzoImg.map((img) => {
                                     return (
-                                        <Button className='buttonImg' key={img.title}>
+                                        <Button className='buttonImg' key={img.img}>
                                             <ImageListItem >
                                                 <img className='imgHome'
                                                     // src={img.img}
@@ -40,7 +39,7 @@ export default function Artist() {
                                                 />
                                                 <ImageListItemBar
                                                     title={img.title}
-                                                    subtitle={art.artistName + art.artistLastName}
+                                                    subtitle={lienzo.lienzoName + lienzo.lienzoLastName}
                                                     actionIcon={
                                                         <IconButton
                                                             sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
