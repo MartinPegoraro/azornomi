@@ -2,10 +2,19 @@ import React from 'react'
 import { Button, ImageList, ImageListItem, IconButton, ImageListItemBar, Box, List } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import { useState, useEffect } from 'react'
+import Modal from './ModalInfoCanva';
 
-export default function Artist() {
+export default function Canva() {
+    const [open, setOpen] = useState(false);
     const [dummyData, setDummyData] = useState([])
+    const [dataModal, setDataModal] = useState({ lienzoId: '', lienzoName: '', lienzoLastName: '', preference: [], img: '' })
 
+
+    const handleOpen = (lienzo, img) => {
+        setDataModal({ lienzoId: lienzo.lienzoId, lienzoName: lienzo.lienzoName, lienzoLastName: lienzo.lienzoLastName, preference: lienzo.preference, img: img })
+        setOpen(true);
+    }
+    const handleClose = () => setOpen(false);
     const fetchData = async () => {
         const res = await fetch('/api/dummyDataLienzo') // Se vuelve a traer todos los datosControlador
         const data = await res.json()
@@ -19,7 +28,9 @@ export default function Artist() {
 
     return (
         <div>
-
+            <Modal handleClose={handleClose}
+                open={open}
+                dataModal={dataModal} />
             <Box className='gridContainer'>
                 {dummyData.map((lienzo) => {
                     return (
@@ -27,7 +38,7 @@ export default function Artist() {
                             {
                                 lienzo.lienzoImg.map((img) => {
                                     return (
-                                        <Button className='buttonImg' key={img.img}>
+                                        <Button className='buttonImg' key={img.img} onClick={() => handleOpen(lienzo, img.img)}>
                                             <ImageListItem >
                                                 <img className='imgHome'
                                                     // src={img.img}
@@ -38,6 +49,7 @@ export default function Artist() {
                                                     alt='img'
                                                 />
                                                 <ImageListItemBar
+                                                    className='infoImg'
                                                     title={img.title}
                                                     subtitle={lienzo.lienzoName + lienzo.lienzoLastName}
                                                     actionIcon={

@@ -8,12 +8,12 @@ export const dummyDataLienzo =
             "lienzoImg": [
 
                 {
-                    "img": "/img/tattoo-tribal-brazo-30.jpg",
-                    "title": "tatoo2.2"
+                    "img": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIodzmRQFsCqC7KbWq_ADQukvj4wozWwlP5g&usqp=CAU',
+                    "title": 'flower',
                 },
                 {
-                    "img": "https://t2.uc.ltmcdn.com/es/posts/7/3/4/significado_de_los_tatuajes_tribales_49437_600_square.jpg",
-                    "title": "tatoo2.3"
+                    "img": 'https://cnnespanol.cnn.com/wp-content/uploads/2022/07/220722142301-ukrtattoo15-full-169.jpg?quality=100&strip=info&w=384&h=216&crop=1',
+                    "title": 'pelado boton',
                 },
                 {
                     "img": "https://i.pinimg.com/originals/95/47/47/9547470357790500d1696b5af81e67da.jpg",
@@ -55,8 +55,8 @@ export const dummyDataLienzo =
                     "title": "tatoo1.1"
                 },
                 {
-                    "img": "/img/tatuajes-en-el-cuello-para-hombres-6-1.jpg",
-                    "title": "tatoo1.2"
+                    "img": 'https://filtrosinsta.com/wp-content/uploads/2021/06/Filtro-tatuajes-572x1024.png',
+                    "title": 'cannigia',
                 },
                 {
                     "img": 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',

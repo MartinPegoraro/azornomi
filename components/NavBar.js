@@ -27,8 +27,8 @@ export default function NavBar({ stateUser }) {
                     <IconButton className='iconButton' size='medium'>
                         <Avatar
                             alt="AzorÑomi"
-                            src="/money.png"
-                            sx={{ width: 25, height: 25 }}
+                            src="/azorñomi.png"
+                            sx={{ width: 35, height: 35 }}
                         />
                     </IconButton>
                 </Grid>
