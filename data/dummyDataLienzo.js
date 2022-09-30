@@ -2,6 +2,8 @@ export const dummyDataLienzo =
     [
         {
             "lienzoId": 1,
+            "type": "lienzo",
+            "photoProfile": "https://i.pinimg.com/originals/d1/96/9b/d1969bacad8be082576cb4645f2f890a.png",
             "lienzoName": "Azor Ahai ",
             "lienzoLastName": "Principe Prometido",
             "preference": ["Comun", "Animado", "Realista"],
@@ -45,6 +47,8 @@ export const dummyDataLienzo =
         },
         {
             "lienzoId": 2,
+            "type": "lienzo",
+            "photoProfile": "https://img.a.transfermarkt.technology/portrait/big/352324-1633537886.JPG?lm=1",
             "lienzoName": "Gonsalo ",
             "lienzoLastName": "Ñomo Cerquetti",
             "preference": ["Trival", "Realista"],
@@ -99,7 +103,48 @@ export const dummyDataLienzo =
             ]
         },
         {
+            "lienzoId": 4,
+            "type": "lienzo",
+            "photoProfile": "https://avatars.githubusercontent.com/u/8821639?v=4",
+            "lienzoName": "Agustin ",
+            "lienzoLastName": "Gomez",
+            "preference": ["Comun", "Animado", "Realista"],
+            "lienzoImg": [
+                {
+                    "img": 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
+                    "title": 'Burger',
+                },
+                {
+                    "img": 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
+                    "title": 'Camera',
+                },
+                {
+                    "img": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWNXCngqvuQlbez8drHxgWZrGG-J7YGSl5vcQAF6ZOLTCwTIZCppO2XcwBeMKPZWYmxt0&usqp=CAU',
+                    "title": 'Coffee',
+                },
+                {
+                    "img": 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
+                    "title": 'Hats',
+                },
+                {
+                    "img": 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
+                    "title": 'Honey',
+                },
+                {
+                    "img": 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
+                    "title": 'Basketball',
+                },
+                {
+                    "img": 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
+                    "title": 'Fern',
+                },
+            ]
+        },
+
+        {
             "lienzoId": 3,
+            "type": "lienzo",
+            "photoProfile": "https://avatars.githubusercontent.com/u/8821639?v=4",
             "lienzoName": "Leandrito ",
             "lienzoLastName": "Caballero",
             "preference": ["Comun", "Animado", "Realista"],
@@ -142,44 +187,9 @@ export const dummyDataLienzo =
             ]
         },
         {
-            "lienzoId": 4,
-            "lienzoName": "Agustin ",
-            "lienzoLastName": "Gomez",
-            "preference": ["Comun", "Animado", "Realista"],
-            "lienzoImg": [
-                {
-                    "img": 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-                    "title": 'Burger',
-                },
-                {
-                    "img": 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-                    "title": 'Camera',
-                },
-                {
-                    "img": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWNXCngqvuQlbez8drHxgWZrGG-J7YGSl5vcQAF6ZOLTCwTIZCppO2XcwBeMKPZWYmxt0&usqp=CAU',
-                    "title": 'Coffee',
-                },
-                {
-                    "img": 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-                    "title": 'Hats',
-                },
-                {
-                    "img": 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-                    "title": 'Honey',
-                    author: '@arwinneil',
-                },
-                {
-                    "img": 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-                    "title": 'Basketball',
-                },
-                {
-                    "img": 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-                    "title": 'Fern',
-                },
-            ]
-        },
-        {
             "lienzoId": 5,
+            "type": "lienzo",
+            "photoProfile": "https://www.petalatino.com/wp-content/uploads/image-151.png",
             "lienzoName": "Makako ",
             "lienzoLastName": "Mario",
             "preference": ["Comun", "Animado", "Realista"],
@@ -238,6 +248,8 @@ export const dummyDataLienzo =
         },
         {
             "lienzoId": 6,
+            "type": "lienzo",
+            "photoProfile": "https://cdn.soccerwiki.org/images/player/77681.png",
             "lienzoName": "Perro  ",
             "lienzoLastName": "Anfeta",
             "preference": ["Comun", "Animado", "Realista"],
@@ -262,6 +274,8 @@ export const dummyDataLienzo =
         },
         {
             "lienzoId": 7,
+            "type": "lienzo",
+            "photoProfile": "https://e7.pngegg.com/pngimages/535/292/png-clipart-martin-palermo-boca-juniors-football-player-sport-football-tshirt-sport-thumbnail.png",
             "lienzoName": "Roman ",
             "lienzoLastName": "Riquelme",
             "preference": ["Comun", "Animado", "Realista"],
@@ -298,6 +312,8 @@ export const dummyDataLienzo =
         },
         {
             "lienzoId": 8,
+            "type": "lienzo",
+            "photoProfile": "https://img1.freepng.es/20180804/iwi/kisspng-boca-juniors-football-goal-midfielder-5b65362e7193b6.7041115815333596624652.jpg",
             "lienzoName": "Martin ",
             "lienzoLastName": "Palermo",
             "preference": ["Comun", "Animado", "Realista"],

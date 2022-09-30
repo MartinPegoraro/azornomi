@@ -3,6 +3,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import { Typography, Box, Modal, Grid, IconButton } from '@mui/material';
+import Link from 'next/link';
 
 const style = {
     position: 'absolute',
@@ -19,7 +20,6 @@ const style = {
 
 
 const ModalInfoArtisti = ({ handleClose, open, dataModal }) => {
-    console.log(dataModal);
     return (
         <div>
             <Modal
@@ -45,18 +45,22 @@ const ModalInfoArtisti = ({ handleClose, open, dataModal }) => {
                             <Typography variant='h5'>Chat</Typography>
                         </Box>
                         <Box sx={{ width: '100%', mb: '60%', textAlign: 'center' }}>
-                            <IconButton >
-                                <AccountCircleIcon className='iconModal' />
-                            </IconButton>
-                            <Typography variant='h5'>Perfil</Typography>
-
+                            <Link href={{
+                                pathname: '/profile/[id]',
+                                query: { id: dataModal.lienzoId, type: dataModal.type }
+                            }} ><a>
+                                    <IconButton >
+                                        <AccountCircleIcon className='iconModal' />
+                                    </IconButton>
+                                    <Typography variant='h5'>Perfil</Typography>
+                                </a>
+                            </Link>
                         </Box>
                         <Box sx={{ width: '100%', mb: '50%', textAlign: 'center' }}>
                             <IconButton >
                                 <TurnedInNotIcon className='iconModal' />
                             </IconButton>
                             <Typography variant='h5'>Guardar</Typography>
-
                         </Box>
                     </Grid>
                     <Grid item xs={5}>

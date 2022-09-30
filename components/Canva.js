@@ -11,7 +11,7 @@ export default function Canva() {
 
 
     const handleOpen = (lienzo, img) => {
-        setDataModal({ lienzoId: lienzo.lienzoId, lienzoName: lienzo.lienzoName, lienzoLastName: lienzo.lienzoLastName, preference: lienzo.preference, img: img })
+        setDataModal({ ...lienzo, img: img })
         setOpen(true);
     }
     const handleClose = () => setOpen(false);

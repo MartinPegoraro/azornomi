@@ -141,4 +141,6 @@
 
 .imgProfile{
     border-radius: 10px;
+    object-fit: cover;
+
 }

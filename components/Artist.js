@@ -11,7 +11,7 @@ export default function Artist() {
     const [open, setOpen] = useState(false);
 
     const handleOpen = (artist, img) => {
-        setDataModal({ artistId: artist.artistId, artistName: artist.artistName, artistLastName: artist.artistLastName, artistStyle: artist.artistStyle, img: img })
+        setDataModal({ ...artist, img: img })
         setOpen(true);
     }
     const handleClose = () => setOpen(false);
@@ -38,7 +38,6 @@ export default function Artist() {
                         <List key={art.artistId}>
                             {
                                 art.artistImg.map((img) => {
-                                    // console.log(img);
                                     return (
                                         <Button className='buttonImg' key={img.title} onClick={() => handleOpen(art, img.img)}>
                                             <ImageListItem >
