@@ -58,10 +58,10 @@ export default function Profile() {
                             <Grid item xs={8}>
                                 <Box>
                                     <Typography variant='h4'>
-                                        Soy un lienzo
+                                        Lienzo
                                     </Typography>
                                     <Typography variant='h6'>
-                                        {dummyData?.lienzoName}
+                                        Soy el lienzo {dummyData?.lienzoName}  {dummyData?.lienzoLastName}
                                     </Typography>
                                     <Typography variant='h6'>
                                         {dummyData?.lienzoLastName}
@@ -81,10 +81,10 @@ export default function Profile() {
                             <Grid item xs={8}>
                                 <Box>
                                     <Typography variant='h4'>
-                                        Soy un artista
+                                        Artista
                                     </Typography>
                                     <Typography variant='h6'>
-                                        {dummyData?.artistName}
+                                        Soy el artista {dummyData?.artistName}{dummyData?.artistLastName}
                                     </Typography>
                                     <Typography variant='h6'>
                                         {dummyData?.artistLastName}

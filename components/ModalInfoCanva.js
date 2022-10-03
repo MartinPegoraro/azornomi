@@ -39,10 +39,16 @@ const ModalInfoArtisti = ({ handleClose, open, dataModal }) => {
                     </Grid>
                     <Grid item xs={2}>
                         <Box sx={{ width: '100%', mb: '60%', textAlign: 'center' }}>
-                            <IconButton >
-                                <ChatIcon className='iconModal' />
-                            </IconButton>
-                            <Typography variant='h5'>Chat</Typography>
+                            <Link href={{
+                                pathname: `/profile/${dataModal.lienzoId + dataModal.type}/inbox/martin`,
+                                query: { id: dataModal.lienzoId, type: dataModal.type }
+                            }} ><a>
+                                    <IconButton >
+                                        <ChatIcon className='iconModal' />
+                                    </IconButton>
+                                    <Typography variant='h5'>Chat</Typography>
+                                </a>
+                            </Link>
                         </Box>
                         <Box sx={{ width: '100%', mb: '60%', textAlign: 'center' }}>
                             <Link href={{

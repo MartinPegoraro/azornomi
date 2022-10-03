@@ -36,11 +36,11 @@ export default function NavBar({ stateUser }) {
                     {state === 'artista' || stateUser === 'artista'
                         ?
                         <Link href='/homeCanvas'>
-                            <Button className='buttonNavBarTatuador' value='artista' onClick={handleClick} variant="outlined"  > Diseñar</Button>
+                            <Button className='buttonNavBarTatuador' value='artista' onClick={handleClick} variant="outlined"  > Encontrar</Button>
                         </Link>
                         : state === 'lienzo' || stateUser === 'lienzo' ?
                             < Link href='/homeArtist'>
-                                <Button className='buttonNavBarLienzo' value='lienzo' onClick={handleClick} variant="outlined"  > Encontrar</Button>
+                                <Button className='buttonNavBarLienzo' value='lienzo' onClick={handleClick} variant="outlined"  > Diseñar</Button>
                             </Link>
                             : null
                     }
