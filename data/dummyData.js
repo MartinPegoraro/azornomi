@@ -6,7 +6,7 @@ export const dummyData =
             "photoProfile": "https://i.pinimg.com/originals/d1/96/9b/d1969bacad8be082576cb4645f2f890a.png",
             "artistName": "Martin ",
             "artistLastName": "Pegoraro",
-            "artistStyle": ["Comun", "Animado", "Realista"],
+            "artistStyle": ["Comun", "Animado", "Realista", "Neotradicional"],
             "artistImg": [{
 
                 "img": "/img/leon.jpg",

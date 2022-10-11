@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router';
 import ChatIcon from '@mui/icons-material/Chat';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
@@ -20,6 +21,7 @@ const style = {
 
 
 const ModalInfoArtisti = ({ handleClose, open, dataModal }) => {
+    const router = useRouter()
     return (
         <div>
             <Modal
@@ -38,19 +40,19 @@ const ModalInfoArtisti = ({ handleClose, open, dataModal }) => {
                         />
                     </Grid>
                     <Grid item xs={2}>
-                        <Box sx={{ width: '100%', mb: '60%', textAlign: 'center' }}>
+                        <Box sx={{ width: '100%', mt: '5%', mb: '55%', textAlign: 'center' }}>
                             <Link href={{
-                                pathname: `/profile/${dataModal.lienzoId + dataModal.type}/inbox/martin`,
-                                query: { id: dataModal.lienzoId, type: dataModal.type }
+                                pathname: `/profile/${dataModal.lienzoId + dataModal.type}/inbox/[id]`,
+                                query: { id: dataModal.lienzoId, type: dataModal.type, img: dataModal.img }
                             }} ><a>
                                     <IconButton >
                                         <ChatIcon className='iconModal' />
                                     </IconButton>
-                                    <Typography variant='h5'>Chat</Typography>
+                                    <Typography variant='h6'>Chat</Typography>
                                 </a>
                             </Link>
                         </Box>
-                        <Box sx={{ width: '100%', mb: '60%', textAlign: 'center' }}>
+                        <Box sx={{ width: '100%', mb: '55%', textAlign: 'center' }}>
                             <Link href={{
                                 pathname: '/profile/[id]',
                                 query: { id: dataModal.lienzoId, type: dataModal.type }
@@ -58,21 +60,21 @@ const ModalInfoArtisti = ({ handleClose, open, dataModal }) => {
                                     <IconButton >
                                         <AccountCircleIcon className='iconModal' />
                                     </IconButton>
-                                    <Typography variant='h5'>Perfil</Typography>
+                                    <Typography variant='h6'>Perfil</Typography>
                                 </a>
                             </Link>
                         </Box>
-                        <Box sx={{ width: '100%', mb: '50%', textAlign: 'center' }}>
+                        <Box sx={{ width: '100%', textAlign: 'center' }}>
                             <IconButton >
                                 <TurnedInNotIcon className='iconModal' />
                             </IconButton>
-                            <Typography variant='h5'>Guardar</Typography>
+                            <Typography variant='h6'>Guardar</Typography>
                         </Box>
                     </Grid>
                     <Grid item xs={5}>
-                        <Box className='boxModal'>
-                            <Typography variant='h4' sx={{ textAlign: 'center' }}>{dataModal.lienzoName} {dataModal.lienzoLastName}</Typography>
-                            <Typography className='tagsModalContainer' variant='h5'> Preference: {dataModal.preference.map((style) => {
+                        <Box className='boxModal' sx={{ p: 2 }}>
+                            <Typography variant='h5' sx={{ p: 2, textAlign: 'center' }}>{dataModal.lienzoName} {dataModal.lienzoLastName}</Typography>
+                            <Typography className='tagsModalContainer' variant='h5'>Preference: {dataModal.preference.map((style) => {
                                 return (
                                     <>
                                         <Typography className='tagsModal' variant='h6'>{style},</Typography>

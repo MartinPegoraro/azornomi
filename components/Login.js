@@ -16,11 +16,11 @@ export default function Login({ stateUser }) {
         }
     }
     return (
-        <>
-            <Box className='boxHome'>
+        <div className='boxContainerLogin'>
+            <Box className='boxLogin'>
                 <Grid container sx={{ height: 40, mt: 1 }}>
                     <Grid item xs={0.4} sx={{ position: 'relative' }}>
-                        <IconButton className='iconButton' size='medium'>
+                        <IconButton className='iconButtonLogin' size='medium'>
                             <Avatar
                                 alt="AzorÑomi"
                                 src="/azorñomi.png"
@@ -29,26 +29,26 @@ export default function Login({ stateUser }) {
                         </IconButton>
                     </Grid>
                     <Grid item xs={9} sx={{ position: 'relative' }}>
-                        <Typography variant='h6' sx={{ position: 'absolute', top: '10%' }}> AzorÑomi</Typography>
+                        <Typography variant='h6' sx={{ position: 'absolute', top: '10%' }}> Azoromi</Typography>
                     </Grid>
 
-                    <Grid item xs={1} sx={{ position: 'relative' }}>
+                    <Grid item xs={1.2} sx={{ position: 'relative' }}>
                         <Link href='/homeCanvas'>
                             <Button variant="contained" component="label" size="small" color="error" sx={{ position: 'absolute', top: '10%', backgroundColor: red[500] }}>
                                 <Typography variant='caption' > Iniciar seccion</Typography>
                             </Button>
                         </Link>
                     </Grid>
-                    <Grid item xs={1} sx={{ position: 'relative' }}>
+                    <Grid item xs={1.2} sx={{ position: 'relative' }}>
                         <Button variant="contained" component="label" size="small" color="success" sx={{ position: 'absolute', top: '10%' }} >
                             <Typography variant='caption' > registrarse</Typography>
                         </Button>
                     </Grid>
                 </Grid>
             </Box >
-            <Box sx={{ mt: 3 }}>
+            <Box sx={{ mt: 3, height: 660 }}>
                 <Grid container >
-                    <Grid item xs={5} sx={{ height: 800 }}>
+                    <Grid item xs={5} sx={{ height: 600 }}>
                         <img className='imgLogin'
                             src='https://www.filo.news/__export/1603471624804/sites/claro/img/2020/10/23/imagenes-de-blog-innova-001.jpg_423682103.jpg'
                             width='100%'
@@ -64,7 +64,7 @@ export default function Login({ stateUser }) {
                             diseñalos o terminalos
                         </Typography>
 
-                        <Grid container sx={{ mx: 10, mt: 5 }}>
+                        <Grid container sx={{ mt: 5 }}>
                             <Grid item sx={{ ml: 15 }} >
                                 < img
                                     className='imgLogin'
@@ -99,6 +99,6 @@ export default function Login({ stateUser }) {
                 </Grid>
 
             </Box>
-        </>
+        </div>
     )
 }

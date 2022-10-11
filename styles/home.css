@@ -1,8 +1,25 @@
 /* LOGIN DE LA PAGINA*/
+.boxContainerLogin{
+    background-color: rgb(255, 250, 244);
+    height: 100%;
+}
+
 .imgLogin{
     border-radius: 30px;
     padding: 15px;
     /* object-fit: cover; */
+}
+.boxLogin{
+    padding: 3px;
+    height: 100%;
+    margin-bottom: 7px;
+}
+
+.iconButtonLogin{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /* HOME DE LA PAGINA*/
@@ -58,7 +75,7 @@
 
 .gridContainer {
     display: grid;                                          /* Estilo pinteres*/
-    grid-template-columns: repeat(auto-fill, 230px);        /* Estilo pinteres*/
+    grid-template-columns: repeat(auto-fill, 190px);        /* Estilo pinteres*/
     gap: 20px;                                              /* Estilo pinteres*/
     justify-content: center;                                /* Estilo pinteres*/
 
@@ -66,7 +83,7 @@
 }
 
 .buttonImg{
-    width: 230px; /* Estilo pinteres*/
+    width: 190px; /* Estilo pinteres*/
     padding: 1px;
 }
 
@@ -112,7 +129,7 @@
 }
 
 .tagsModalContainer{
-    text-align: right;
+    text-align: left;
     display: grid;                                          /* Estilo pinteres*/
     grid-template-columns: repeat(auto-fill, 120px); 
 
@@ -125,8 +142,8 @@
 }
 
 .iconModal{
-    width: 60px;
-    height: 60px;
+    width: 45px;
+    height: 45px;
     color: black;
 }
 
@@ -152,4 +169,42 @@
     border-radius: 10px;
     object-fit: cover;
 
+}
+
+
+/* CSS INBOX MSG*/
+
+.imgInboxMsg{
+    border-radius: 10px;
+    border: 0.5px solid rgb(168, 168, 168);
+    object-fit: cover;
+
+}
+
+.buttonInboxMsg{
+    width: 60%;
+    color: rgb(0, 0, 0);
+    background-color: rgb(244, 244, 74);
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.buttonInboxMsg:hover{
+    background-color: rgb(255, 255, 0);
+}
+
+.hola{
+    background-image: url("../public/img/chat.png");
+    background-size:cover
+}
+
+.hola2{
+    background-image: url("../public/img/chat2.png");
+    background-size:cover
+}
+
+.inputSave{
+    top: 2.5%;
+    left: 10%;
+    
 }

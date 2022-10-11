@@ -6,7 +6,7 @@ export const dummyDataLienzo =
             "photoProfile": "https://i.pinimg.com/originals/d1/96/9b/d1969bacad8be082576cb4645f2f890a.png",
             "lienzoName": "Azor Ahai ",
             "lienzoLastName": "Principe Prometido",
-            "preference": ["Comun", "Animado", "Realista"],
+            "preference": ["Comun", "Animado", "Neotradicional", "Realista"],
             "lienzoImg": [
 
                 {

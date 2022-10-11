@@ -38,13 +38,19 @@ const ModalInfoCanva = ({ handleClose, open, dataModal }) => {
                         />
                     </Grid>
                     <Grid item xs={2}>
-                        <Box sx={{ width: '100%', mb: '60%', textAlign: 'center' }}>
-                            <IconButton >
-                                <ChatIcon className='iconModal' />
-                            </IconButton>
-                            <Typography variant='h5'>Chat</Typography>
+                        <Box sx={{ width: '100%', mt: '5%', mb: '55%', textAlign: 'center' }}>
+                            <Link href={{
+                                pathname: `/profile/${dataModal.artistId + dataModal.type}/inbox/[id]`,
+                                query: { id: dataModal.artistId, type: dataModal.type, img: dataModal.img }
+                            }}><a>
+                                    <IconButton >
+                                        <ChatIcon className='iconModal' />
+                                    </IconButton>
+                                    <Typography variant='h6'>Chat</Typography>
+                                </a>
+                            </Link>
                         </Box>
-                        <Box sx={{ width: '100%', mb: '60%', textAlign: 'center' }}>
+                        <Box sx={{ width: '100%', mb: '55%', textAlign: 'center' }}>
                             <Link href={{
                                 pathname: '/profile/[id]',
                                 query: { id: dataModal.artistId, type: dataModal.type }
@@ -52,21 +58,21 @@ const ModalInfoCanva = ({ handleClose, open, dataModal }) => {
                                     <IconButton >
                                         <AccountCircleIcon className='iconModal' />
                                     </IconButton>
-                                    <Typography variant='h5'>Perfil</Typography>
+                                    <Typography variant='h6'>Perfil</Typography>
                                 </a>
                             </Link>
                         </Box>
-                        <Box sx={{ width: '100%', mb: '50%', textAlign: 'center' }}>
+                        <Box sx={{ width: '100%', textAlign: 'center' }}>
                             <IconButton >
                                 <TurnedInNotIcon className='iconModal' />
                             </IconButton>
-                            <Typography variant='h5'>Guardar</Typography>
+                            <Typography variant='h6'>Guardar</Typography>
 
                         </Box>
                     </Grid>
                     <Grid item xs={5}>
-                        <Box className='boxModal'>
-                            <Typography variant='h4' sx={{ textAlign: 'center' }}>{dataModal.artistName} {dataModal.artistLastName}</Typography>
+                        <Box className='boxModal' sx={{ p: 2 }}>
+                            <Typography variant='h5' sx={{ p: 2, textAlign: 'center' }}>{dataModal.artistName} {dataModal.artistLastName}</Typography>
                             <Typography className='tagsModalContainer' variant='h5'> Styles: {dataModal.artistStyle.map((style) => {
                                 return (
                                     <>
