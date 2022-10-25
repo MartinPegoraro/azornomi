@@ -1,13 +1,15 @@
 import React from 'react'
 import { useState, useEffect, useCallback } from 'react'
-import { Grid, IconButton, Typography, ImageListItem, Button, Box, Avatar } from '@mui/material'
+import { Grid, IconButton, Typography, ImageListItem, Button, Box, Avatar, Accordion, AccordionSummary, AccordionDetails } from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Link from 'next/link';
 import SettingsIcon from '@mui/icons-material/Settings';
 import UploadIcon from '@mui/icons-material/Upload';
 import GridOnIcon from '@mui/icons-material/GridOn';
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useRouter } from 'next/router';
+import { height } from '@mui/system';
 
 
 export default function Profile() {
@@ -36,6 +38,28 @@ export default function Profile() {
             setDummyData(newData)
         }
     }, [router])
+
+    // const handleClickSetting = () => {
+    //     return (
+    //         <>
+    //             <Accordion>
+    //                 <AccordionSummary
+    //                     expandIcon={<ExpandMoreIcon />}
+    //                     aria-controls="panel1a-content"
+    //                     id="panel1a-header"
+    //                 >
+    //                     <Typography>Accordion 1</Typography>
+    //                 </AccordionSummary>
+    //                 <AccordionDetails>
+    //                     <Typography>
+    //                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+    //                         malesuada lacus ex, sit amet blandit leo lobortis eget.
+    //                     </Typography>
+    //                 </AccordionDetails>
+    //             </Accordion>
+    //         </>
+    //     )
+    // }
 
     useEffect(() => {
         fetchData();
@@ -119,9 +143,21 @@ export default function Profile() {
 
                     </Grid>
                     <Grid item xs={0.5}>
-                        <IconButton>
-                            <SettingsIcon />
-                        </IconButton>
+                        <Accordion sx={{ boxShadow: 'none', top: -5 }}>
+                            <AccordionSummary
+                                expandIcon={<IconButton><SettingsIcon /> </IconButton>}
+                                aria-controls="panel1a-content"
+                                id="panel1a-header"
+                            />
+                            <AccordionDetails sx={{ width: 150, boxShadow: '3px 3px 5px 5px rgb(239, 233, 233)', borderRadius: 5 }}>
+                                <Button sx={{ textTransform: 'capitalize', borderBottom: 1 }}>
+                                    Editar perfil
+                                </Button>
+                                <Button sx={{ textTransform: 'capitalize' }}>
+                                    Cerrar seccion
+                                </Button>
+                            </AccordionDetails>
+                        </Accordion>
                     </Grid>
                 </Grid>
             </Box>

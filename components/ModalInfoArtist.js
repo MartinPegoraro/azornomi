@@ -40,8 +40,8 @@ const ModalInfoCanva = ({ handleClose, open, dataModal }) => {
                     <Grid item xs={2}>
                         <Box sx={{ width: '100%', mt: '5%', mb: '55%', textAlign: 'center' }}>
                             <Link href={{
-                                pathname: `/profile/${dataModal.artistId + dataModal.type}/inbox/[id]`,
-                                query: { id: dataModal.artistId, type: dataModal.type, img: dataModal.img }
+                                pathname: `/profile/[id]/inbox/[idMsg]`,
+                                query: { id: dataModal.artistId + dataModal.type, idMsg: dataModal.artistId, type: dataModal.type, img: dataModal.img }
                             }}><a>
                                     <IconButton >
                                         <ChatIcon className='iconModal' />

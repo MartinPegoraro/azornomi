@@ -7,6 +7,37 @@ export const dummyData =
             "artistName": "Martin ",
             "artistLastName": "Pegoraro",
             "artistStyle": ["Comun", "Animado", "Realista", "Neotradicional"],
+            "chatLienzo": [{
+                "idLienzo": 1,
+                "state": "process",
+                "name": "Martin Pegoraro"
+            },
+            {
+                "idLienzo": 2,
+                "state": "ending",
+                "name": "Gonzalo Cerquetti"
+            },
+            {
+                "idLienzo": 3,
+                "state": "ending",
+                "name": "Lenadrito Caballero"
+            },
+            {
+                "idLienzo": 4,
+                "state": "ending",
+                "name": "Agustin Gomez"
+            },
+            {
+                "idLienzo": 5,
+                "state": "ending",
+                "name": "Gonzalo "
+            },
+            {
+                "idLienzo": 6,
+                "state": "process",
+                "name": "Jhon Azor Ahai "
+            }
+            ],
             "artistImg": [{
 
                 "img": "/img/leon.jpg",
@@ -61,6 +92,7 @@ export const dummyData =
             "artistName": "Gonsalo ",
             "artistLastName": "Ñomo Cerquetti",
             "artistStyle": ["Trival", "Realista"],
+            "chatLienzo": [{}],
             "artistImg": [
                 {
                     "img": "/img/tattoo-tribal-brazo-30.jpg",
@@ -126,7 +158,6 @@ export const dummyData =
                 {
                     "img": 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
                     "title": 'Honey',
-                    author: '@arwinneil',
                 },
                 {
                     "img": 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
@@ -315,7 +346,5 @@ export const dummyData =
 
             }]
         },
-
-
     ]
 

@@ -1,6 +1,6 @@
 /* LOGIN DE LA PAGINA*/
 .boxContainerLogin{
-    background-color: rgb(255, 250, 244);
+    background-color: rgb(244, 255, 247);
     height: 100%;
 }
 
@@ -22,6 +22,36 @@
     transform: translate(-50%, -50%);
 }
 
+/*       MODAL LOGIN        */
+.modalLogin{
+    position: absolute;
+    width: 35%;
+    height: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    border: 2px solid black;
+    box-shadow: 24px;
+    padding: 20px;
+    text-align: center;
+}
+
+/*       MODAL CHECK IN        */
+.modalCheckIn{
+    position: absolute;
+    width: 35%;
+    height: 65%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    border: 2px solid black;
+    box-shadow: 24px;
+    padding: 20px;
+    text-align: center;
+}
+
 /* HOME DE LA PAGINA*/
 
 .boxHome{
@@ -40,6 +70,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
     
 }
 .buttonNavBarTatuador{
@@ -54,7 +85,7 @@
     transform: translate(-50%, -50%);
 }
 .search{
-   text-transform: lowercase;
+   text-transform: capitalize;
     justify-content: left;
     width: 98%; 
     color: rgb(55, 54, 54);

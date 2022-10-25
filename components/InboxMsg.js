@@ -48,7 +48,7 @@ export default function InboxMsg() {
                         <Box sx={{ margin: 2, p: 1, width: '50%', borderRadius: 3, border: 1, background: 'yellow' }}>
                             <Typography variant='caption'> Recordatorio: Esperar hasta que la otra parte conteste antes de realizar el pago.</Typography>
                         </Box>
-                        <Box sx={{ margin: 2, p: 1, width: '70%', borderRadius: 3, border: 1, background: 'rgb(244, 244, 244)' }}>
+                        <Box sx={{ margin: 2, p: 1, width: '70%', borderRadius: 3, border: 1, background: 'rgb(234, 234, 234)' }}>
                             <Typography variant='h5' sx={{ margin: 1 }}>Artista</Typography>
                             <Typography variant='h6' sx={{ margin: 1 }}>Nombre: {dummyData?.artistName} {dummyData?.artistLastName}</Typography>
                             <Typography variant='h6' sx={{ margin: 1 }}>Edad: 48 años</Typography>
@@ -73,7 +73,7 @@ export default function InboxMsg() {
                         </Grid>
                     </Grid>
                     <Grid item xs={5.5} >
-                        <Box className='hola2' sx={{ border: 1, m: 2, ml: 20, mr: 10, height: '100%', borderRadius: 3 }}>
+                        <Box className='hola2' sx={{ border: 1, m: 2, ml: 20, mr: 10, height: '80vh', borderRadius: 3 }}>
                             <Box sx={{ height: '90%', width: '100%' }}></Box>
                             <Button className='inputSave' sx={{ height: '5%', width: '80%', border: 0.5, borderRadius: 2, background: 'white' }}>
                                 <Typography variant='caption' sx={{ color: 'rgb(202, 200, 200)', textAlign: 'left' }}> Escriba un mensaje aqui</Typography>
@@ -115,7 +115,7 @@ export default function InboxMsg() {
                         </Grid>
                     </Grid>
                     <Grid item xs={5.5} >
-                        <Box className='hola' sx={{ border: 1, m: 2, ml: 20, mr: 10, height: '100%', borderRadius: 3 }}>
+                        <Box className='hola' sx={{ border: 1, m: 2, ml: 20, mr: 10, height: '80vh', borderRadius: 3 }}>
                             <Box sx={{ height: '90%', width: '100%' }}></Box>
                             <Button className='inputSave' sx={{ height: '5%', width: '80%', border: 0.5, borderRadius: 2, background: 'white' }}>
                                 <Typography variant='caption' sx={{ color: 'rgb(202, 200, 200)', textAlign: 'left' }}> Escriba un mensaje aqui</Typography>

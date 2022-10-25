@@ -7,6 +7,15 @@ export const dummyDataLienzo =
             "lienzoName": "Azor Ahai ",
             "lienzoLastName": "Principe Prometido",
             "preference": ["Comun", "Animado", "Neotradicional", "Realista"],
+            "chatArtist": [{
+                "id": 4,
+                "name": "abc"
+            },
+            {
+                "id": 3,
+                "name": "defg"
+            }
+            ],
             "lienzoImg": [
 
                 {
@@ -52,6 +61,7 @@ export const dummyDataLienzo =
             "lienzoName": "Gonsalo ",
             "lienzoLastName": "Ñomo Cerquetti",
             "preference": ["Trival", "Realista"],
+            "chatArtist": [{}],
             "lienzoImg": [
                 {
 

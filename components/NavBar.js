@@ -62,9 +62,14 @@ export default function NavBar({ stateUser }) {
                     </IconButton>
                 </Grid>
                 <Grid item xs={0.5} sx={{ position: 'relative' }}>
-                    <IconButton sx={{ p: 0 }} className='iconButton' size='medium'>
-                        < ChatIcon sx={{ fontSize: 30 }} />
-                    </IconButton>
+                    <Link href='/profile/2/inbox'>
+                        <a>
+                            <IconButton sx={{ p: 0 }} className='iconButton' size='medium'>
+                                < ChatIcon sx={{ fontSize: 30 }} />
+                            </IconButton>
+
+                        </a>
+                    </Link>
                 </Grid>
                 <Grid item xs={0.5} sx={{ position: 'relative' }} >
                     <IconButton sx={{ p: 0 }} className='iconButton' size='medium'>

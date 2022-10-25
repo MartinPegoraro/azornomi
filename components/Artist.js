@@ -3,6 +3,7 @@ import { Button, ImageList, ImageListItem, IconButton, ImageListItemBar, Box, Li
 import InfoIcon from '@mui/icons-material/Info';
 import { useState, useEffect } from 'react'
 import Modal from './ModalInfoArtist';
+import axios from 'axios';
 
 
 export default function Artist() {
@@ -17,10 +18,9 @@ export default function Artist() {
     const handleClose = () => setOpen(false);
 
     const fetchData = async () => {
-        const res = await fetch('/api/dummyData') // Se vuelve a traer todos los datosControlador
-        const data = await res.json()
-        var newData = data
-        setDummyData(newData)
+        const res = await axios.get('/api/dummyData') // Se vuelve a traer todos los datosControlador
+        const data = await res.data
+        setDummyData(data)
     }
 
     useEffect(() => {

@@ -3,6 +3,7 @@ import { Button, ImageList, ImageListItem, IconButton, ImageListItemBar, Box, Li
 import InfoIcon from '@mui/icons-material/Info';
 import { useState, useEffect } from 'react'
 import Modal from './ModalInfoCanva';
+import axios from 'axios';
 
 export default function Canva() {
     const [open, setOpen] = useState(false);
@@ -16,16 +17,17 @@ export default function Canva() {
     }
     const handleClose = () => setOpen(false);
     const fetchData = async () => {
-        const res = await fetch('/api/dummyDataLienzo') // Se vuelve a traer todos los datosControlador
-        const data = await res.json()
-        var newData = data
-        setDummyData(newData)
+        const res = await axios.get('/api/dummyDataLienzo') // Se vuelve a traer todos los datosControlador
+        console.log(res.data, 'res');
+        const data = await res.data
+        setDummyData(data)
     }
 
     useEffect(() => {
         fetchData();
     }, [])
 
+    console.log(dummyData);
     return (
         <div>
             <Modal handleClose={handleClose}

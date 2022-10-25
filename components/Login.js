@@ -1,22 +1,67 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { Box, Grid, Button, Avatar, IconButton, Typography } from '@mui/material'
+import { Box, Grid, Button, Avatar, IconButton, Typography, TextField } from '@mui/material'
 import { red, green } from '@mui/material/colors';
+import ModalLogin from './ModalLogin';
+import ModalCheckIn from './ModalCheckIn';
+import axios from 'axios';
 
 
 export default function Login({ stateUser }) {
     const [state, setState] = useState('')
+    const [value, setValue] = useState('')
+    const [open, setOpen] = useState(false);
+    const [openChekIn, setOpenCheckIn] = useState(false);
 
-    const handleClick = (e) => {
-        if (e.target.value === 'lienzo') {
-            setState('artista')
 
-        } else {
-            setState('lienzo')
-        }
+    const handleChange = (e) => {
+        setValue(e.target.value)
+
     }
+
+    const handleClick = async (e) => {
+        console.log(value, 'value en habldeclick');
+        const res = await axios.post('/api/dummyData', {
+
+
+            "artistId": Date.now(),
+            "type": value,
+            "photoProfile": "https://e7.pngegg.com/pngimages/535/292/png-clipart-martin-palermo-boca-juniors-football-player-sport-football-tshirt-sport-thumbnail.png",
+            "artistName": "Silvia",
+            "artistLastName": "Ojeda",
+            "artistStyle": ["tradicional", "dibujos", "Animados"],
+
+        })
+        const data = await res.data
+        console.log(data);
+    }
+
+    const handleOpen = () => {
+        setOpen(true);
+    }
+    const handleOpenCheckIn = () => {
+        setOpenCheckIn(true);
+    }
+    const handleClose = () => setOpen(false);
+    const handleCloseCheckIn = () => setOpenCheckIn(false);
+
+    // const handleClick = (e) => {
+    //     if (e.target.value === 'lienzo') {
+    //         setState('artista')
+
+    //     } else {
+    //         setState('lienzo')
+    //     }
+    // }
+    console.log(value);
     return (
         <div className='boxContainerLogin'>
+            <ModalLogin handleClose={handleClose}
+                open={open}
+            />
+            <ModalCheckIn handleCloseCheckIn={handleCloseCheckIn}
+                openChekIn={openChekIn}
+            />
             <Box className='boxLogin'>
                 <Grid container sx={{ height: 40, mt: 1 }}>
                     <Grid item xs={0.4} sx={{ position: 'relative' }}>
@@ -33,14 +78,14 @@ export default function Login({ stateUser }) {
                     </Grid>
 
                     <Grid item xs={1.2} sx={{ position: 'relative' }}>
-                        <Link href='/homeCanvas'>
-                            <Button variant="contained" component="label" size="small" color="error" sx={{ position: 'absolute', top: '10%', backgroundColor: red[500] }}>
-                                <Typography variant='caption' > Iniciar seccion</Typography>
-                            </Button>
-                        </Link>
+                        {/* <Link href='/homeCanvas'> */}
+                        <Button onClick={() => handleOpen()} variant="contained" component="label" size="small" color="error" sx={{ position: 'absolute', top: '10%', backgroundColor: red[500] }}>
+                            <Typography variant='caption' > Iniciar seccion</Typography>
+                        </Button>
+                        {/* </Link> */}
                     </Grid>
                     <Grid item xs={1.2} sx={{ position: 'relative' }}>
-                        <Button variant="contained" component="label" size="small" color="success" sx={{ position: 'absolute', top: '10%' }} >
+                        <Button onClick={() => handleOpenCheckIn()} variant="contained" component="label" size="small" color="success" sx={{ position: 'absolute', top: '10%' }} >
                             <Typography variant='caption' > registrarse</Typography>
                         </Button>
                     </Grid>

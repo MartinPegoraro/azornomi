@@ -42,8 +42,8 @@ const ModalInfoArtisti = ({ handleClose, open, dataModal }) => {
                     <Grid item xs={2}>
                         <Box sx={{ width: '100%', mt: '5%', mb: '55%', textAlign: 'center' }}>
                             <Link href={{
-                                pathname: `/profile/${dataModal.lienzoId + dataModal.type}/inbox/[id]`,
-                                query: { id: dataModal.lienzoId, type: dataModal.type, img: dataModal.img }
+                                pathname: `/profile/[id]/inbox/[idMsg]`,
+                                query: { id: dataModal.lienzoId + "?" + dataModal.type, idMsg: dataModal.lienzoId, type: dataModal.type, img: dataModal.img }
                             }} ><a>
                                     <IconButton >
                                         <ChatIcon className='iconModal' />
