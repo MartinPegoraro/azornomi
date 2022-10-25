@@ -203,7 +203,20 @@
 }
 
 
-/* CSS INBOX MSG*/
+/*          CSS MODAL SETTINGS          */
+.modalSettings{
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    border: 2px solid black;
+    padding: 20px;
+}
+
+/*          CSS INBOX MSG               */
 
 .imgInboxMsg{
     border-radius: 10px;

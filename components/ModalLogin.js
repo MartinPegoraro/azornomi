@@ -11,7 +11,6 @@ const ModalLogin = ({ open, handleClose }) => {
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
-                disableScrollLock='true'
             >
                 <Box className='modalLogin'>
                     <Box>

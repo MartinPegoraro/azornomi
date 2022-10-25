@@ -10,13 +10,20 @@ import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useRouter } from 'next/router';
 import { height } from '@mui/system';
+import ModalSettings from './ModalSettings';
 
 
 export default function Profile() {
     const [dummyData, setDummyData] = useState({ lienzoImg: [] })
-
+    const [open, setOpen] = useState(false);
     const router = useRouter()
     console.log(router.query, 'router');
+
+
+    const handleOpen = () => {
+        setOpen(true);
+    }
+    const handleClose = () => setOpen(false);
 
     const fetchData = useCallback(async () => {
         const typeUser = router.query.type
@@ -39,28 +46,6 @@ export default function Profile() {
         }
     }, [router])
 
-    // const handleClickSetting = () => {
-    //     return (
-    //         <>
-    //             <Accordion>
-    //                 <AccordionSummary
-    //                     expandIcon={<ExpandMoreIcon />}
-    //                     aria-controls="panel1a-content"
-    //                     id="panel1a-header"
-    //                 >
-    //                     <Typography>Accordion 1</Typography>
-    //                 </AccordionSummary>
-    //                 <AccordionDetails>
-    //                     <Typography>
-    //                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-    //                         malesuada lacus ex, sit amet blandit leo lobortis eget.
-    //                     </Typography>
-    //                 </AccordionDetails>
-    //             </Accordion>
-    //         </>
-    //     )
-    // }
-
     useEffect(() => {
         fetchData();
     }, [fetchData])
@@ -69,6 +54,9 @@ export default function Profile() {
 
     return (
         <>
+            <ModalSettings handleClose={handleClose}
+                open={open}
+            />
             <Box sx={{ mx: 40, mb: 2, borderBottom: 1 }}>
                 <Grid container>
                     {dummyData?.type === 'lienzo'
@@ -150,7 +138,7 @@ export default function Profile() {
                                 id="panel1a-header"
                             />
                             <AccordionDetails sx={{ width: 150, boxShadow: '3px 3px 5px 5px rgb(239, 233, 233)', borderRadius: 5 }}>
-                                <Button sx={{ textTransform: 'capitalize', borderBottom: 1 }}>
+                                <Button onClick={() => handleOpen()} sx={{ textTransform: 'capitalize', borderBottom: 1 }}>
                                     Editar perfil
                                 </Button>
                                 <Button sx={{ textTransform: 'capitalize' }}>

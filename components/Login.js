@@ -13,12 +13,6 @@ export default function Login({ stateUser }) {
     const [open, setOpen] = useState(false);
     const [openChekIn, setOpenCheckIn] = useState(false);
 
-
-    const handleChange = (e) => {
-        setValue(e.target.value)
-
-    }
-
     const handleClick = async (e) => {
         console.log(value, 'value en habldeclick');
         const res = await axios.post('/api/dummyData', {
