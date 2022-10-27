@@ -19,6 +19,7 @@ const ModalLogin = ({ open, handleClose }) => {
                     <Box>
                         <Typography variant='caption' sx={{ width: '70%', display: 'inline-block' }} >Nombre de usuario</Typography>
                         <TextField
+                            size='small'
                             sx={{ width: '70%', mb: 2, display: 'inline-block' }}
                             required
                             id="outlined-required"
@@ -27,6 +28,7 @@ const ModalLogin = ({ open, handleClose }) => {
                     <Box>
                         <Typography variant='caption' sx={{ width: '70%', display: 'inline-block' }} >Contraseña</Typography>
                         <TextField
+                            size='small'
                             sx={{ width: '70%', mb: 1, display: 'inline-block' }}
                             id="outlined-password-input"
                             type="password"

@@ -11,13 +11,22 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useRouter } from 'next/router';
 import { height } from '@mui/system';
 import ModalSettings from './ModalSettings';
+import ModalUploadImg from './ModalUploadImg';
 
 
 export default function Profile() {
     const [dummyData, setDummyData] = useState({ lienzoImg: [] })
     const [open, setOpen] = useState(false);
+    const [openUploadImg, setOpenUploadImg] = useState(false);
+
     const router = useRouter()
     console.log(router.query, 'router');
+
+    const handleOpenUploadImg = () => {
+        setOpenUploadImg(true);
+    }
+
+    const handleCloseUploadImg = () => setOpenUploadImg(false);
 
 
     const handleOpen = () => {
@@ -56,6 +65,9 @@ export default function Profile() {
         <>
             <ModalSettings handleClose={handleClose}
                 open={open}
+            />
+            <ModalUploadImg handleCloseUploadImg={handleCloseUploadImg}
+                openUploadImg={openUploadImg}
             />
             <Box sx={{ mx: 40, mb: 2, borderBottom: 1 }}>
                 <Grid container>
@@ -125,7 +137,7 @@ export default function Profile() {
                     }
 
                     <Grid item xs={0.5}>
-                        <IconButton>
+                        <IconButton onClick={handleOpenUploadImg}>
                             <UploadIcon />
                         </IconButton>
 

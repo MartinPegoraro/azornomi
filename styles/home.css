@@ -127,7 +127,7 @@
 }
 
 
-/* ------ CSS MODAL -------*/
+/* ------ CSS MODAL HOME-------*/
 .modalImg{
     position: absolute;
     width: 80%;
@@ -215,6 +215,35 @@
     border: 2px solid black;
     padding: 20px;
 }
+
+
+/*          CSS MODAL UPLOAD IMG          */
+.modalUploadImg{
+    position: absolute;
+    width: 25%;
+    height: 70%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    border: 2px solid black;
+    padding: 20px;
+    text-align: center;
+}
+
+.buttonImgUpload{
+    width: 210px; /* Estilo pinteres*/
+    border-radius: 10px;
+    display: inline;
+}
+
+.imgUpload{
+    border-radius: 10px;
+    object-fit: cover;
+
+}
+
+
 
 /*          CSS INBOX MSG               */
 

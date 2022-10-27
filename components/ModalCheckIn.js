@@ -20,6 +20,7 @@ const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
                     <Box>
                         <Typography variant='caption' sx={{ width: '70%', display: 'inline-block' }} >Nombre</Typography>
                         <TextField
+                            size='small'
                             sx={{ width: '70%', display: 'inline-block' }}
                             required
                             id="outlined-required"
@@ -28,6 +29,7 @@ const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
                     <Box>
                         <Typography variant='caption' sx={{ width: '70%', display: 'inline-block' }} >Apellido</Typography>
                         <TextField
+                            size='small'
                             sx={{ width: '70%', display: 'inline-block' }}
                             required
                             id="outlined-required"
@@ -37,6 +39,7 @@ const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
                     <Box>
                         <Typography variant='caption' sx={{ width: '70%', display: 'inline-block' }} >Correo</Typography>
                         <TextField
+                            size='small'
                             sx={{ width: '70%', display: 'inline-block' }}
                             required
                             id="outlined-required"
@@ -45,6 +48,7 @@ const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
                     <Box>
                         <Typography variant='caption' sx={{ width: '70%', display: 'inline-block' }} >Contraseña</Typography>
                         <TextField
+                            size='small'
                             sx={{ width: '70%', mb: 2, display: 'inline-block' }}
                             id="outlined-password-input"
                             type="password"
