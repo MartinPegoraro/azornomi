@@ -1,19 +1,39 @@
 import React, { useState } from 'react'
-import { Typography, Box, Modal, Grid, IconButton, Button, TextField } from '@mui/material';
+import { Typography, Box, Modal, Grid, IconButton, Button, TextField, Snackbar } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/AddPhotoAlternate';
+import uploadImg from '../pages/api/img';
 import Image from 'next/image'
 import Link from 'next/link';
 
 
 const ModalUpImg = ({ openUploadImg, handleCloseUploadImg }) => {
     const [img, setImg] = useState([])
+    const [imgUrl, setImgUrl] = useState('')
+    const [open, setOpen] = useState({ status: false, message: '' })
 
     const handleChange = (e) => {
-        console.log(e.target.files)
+        console.log(e.target.files[0])
         setImg(e.target.files[0])
+        // console.log(URL.createObjectURL(e.target.files[0]));
     }
 
-    console.log(img.type);
+    const handleClick = (e) => {
+
+        let idImg = Date.now()
+        var bodyFormData = new FormData();
+        bodyFormData.append('id', idImg);
+        bodyFormData.append('formato', 'jpg');
+        bodyFormData.append('foto', img);
+        uploadImg(bodyFormData, showNotification)
+
+        console.log(idImg)
+    }
+
+    const showNotification = (state) => {
+        setOpen(state)
+        console.log(state);
+    }
+
     return (
         <>
             <Modal
@@ -22,6 +42,11 @@ const ModalUpImg = ({ openUploadImg, handleCloseUploadImg }) => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
+                {/* <Snackbar
+                    open={open.status}
+                    autoHideDuration={6000}
+                    message='que onda'
+                /> */}
                 <Box container className='modalUploadImg'>
                     <Grid container sx={{ height: '45%' }} >
                         <Grid item xs={3} >
@@ -58,7 +83,7 @@ const ModalUpImg = ({ openUploadImg, handleCloseUploadImg }) => {
                         />
                     </Box>
                     <Box>
-                        <Button variant="outlined" sx={{ textTransform: 'capitalize' }}>Subir foto</Button>
+                        <Button variant="outlined" onClick={handleClick} sx={{ textTransform: 'capitalize' }}>Subir foto</Button>
                     </Box>
                 </Box>
             </Modal>

@@ -1,4 +1,4 @@
-/* LOGIN DE LA PAGINA*/
+                                            /*       LOGIN DE LA PAGINA         */
 .boxContainerLogin{
     background-color: rgb(244, 255, 247);
     height: 100%;
@@ -22,7 +22,7 @@
     transform: translate(-50%, -50%);
 }
 
-/*       MODAL LOGIN        */
+                                            /*       MODAL LOGIN        */
 .modalLogin{
     position: absolute;
     width: 35%;
@@ -37,7 +37,7 @@
     text-align: center;
 }
 
-/*       MODAL CHECK IN        */
+                                            /*       MODAL CHECK IN        */
 .modalCheckIn{
     position: absolute;
     width: 35%;
@@ -52,7 +52,7 @@
     text-align: center;
 }
 
-/* HOME DE LA PAGINA*/
+                                                /* HOME DE LA PAGINA*/
 
 .boxHome{
     border: 1px solid white;
@@ -127,7 +127,7 @@
 }
 
 
-/* ------ CSS MODAL HOME-------*/
+                                            /* ------ CSS MODAL HOME-------*/
 .modalImg{
     position: absolute;
     width: 80%;
@@ -179,7 +179,7 @@
 }
 
 
-/* ------ CSS PROFILE -------*/
+                                                /* ------        CSS PROFILE           -------*/
 
 .gridContainerProfile {
     background-color: rgb(234, 234, 234);
@@ -203,21 +203,22 @@
 }
 
 
-/*          CSS MODAL SETTINGS          */
+                                                /*          CSS MODAL SETTINGS          */
 .modalSettings{
     position: absolute;
-    width: 80%;
-    height: 80%;
+    width: 70%;
+    height: 55%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: rgb(255, 255, 255);
     border: 2px solid black;
     padding: 20px;
+    text-align: center;
 }
 
 
-/*          CSS MODAL UPLOAD IMG          */
+                                                /*          CSS MODAL UPLOAD IMG          */
 .modalUploadImg{
     position: absolute;
     width: 25%;
@@ -244,8 +245,7 @@
 }
 
 
-
-/*          CSS INBOX MSG               */
+                                            /*          CSS INBOX MSG               */
 
 .imgInboxMsg{
     border-radius: 10px;

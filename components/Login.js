@@ -74,7 +74,7 @@ export default function Login({ stateUser }) {
                     <Grid item xs={1.2} sx={{ position: 'relative' }}>
                         {/* <Link href='/homeCanvas'> */}
                         <Button onClick={() => handleOpen()} variant="contained" component="label" size="small" color="error" sx={{ position: 'absolute', top: '10%', backgroundColor: red[500] }}>
-                            <Typography variant='caption' > Iniciar seccion</Typography>
+                            <Typography variant='caption' > Iniciar sesion</Typography>
                         </Button>
                         {/* </Link> */}
                     </Grid>

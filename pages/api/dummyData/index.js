@@ -17,15 +17,4 @@ export default async function handler(req, res) {
 
     }
 
-
-
-    //     if (req.method === 'GET') {
-    //         res.status(200).json(dummyData)
-    //     } else if (req.method === 'POST') {
-    //         console.log('metodo post', req.body.value, req.body);
-    //         const dummyDataBody = req.body
-    //         dummyData.push(dummyDataBody)
-    //         // dummyData.save(dummyDataBody)
-    //         res.status(201).json(dummyDataBody)
-    //     }
 }

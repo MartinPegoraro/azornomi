@@ -1,9 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Typography, Box, Modal, Grid, IconButton, Button, TextField } from '@mui/material';
 import Link from 'next/link';
-
+import { userApi } from '../pages/api/user';
 
 const ModalLogin = ({ open, handleClose }) => {
+    const [form, setForm] = useState({ email: '', password: '' })
+
+    const onInputChange = ({ target }) => {
+        const { name, value } = target;
+        setForm({
+            ...form,
+            [name]: value
+        });
+    }
+
+    const handleSubmit = () => {
+        console.log(form);
+        userApi.loginUser(form)
+    }
     return (
         <>
             <Modal
@@ -17,8 +31,11 @@ const ModalLogin = ({ open, handleClose }) => {
                         <Typography variant='h6' sx={{ mb: 1, width: '70%', display: 'inline-block' }} >Inicia sesión en tu cuenta</Typography>
                     </Box>
                     <Box>
-                        <Typography variant='caption' sx={{ width: '70%', display: 'inline-block' }} >Nombre de usuario</Typography>
+                        <Typography variant='caption' sx={{ width: '70%', display: 'inline-block' }} >Correo</Typography>
                         <TextField
+                            onChange={onInputChange}
+                            value={form.email}
+                            name="email"
                             size='small'
                             sx={{ width: '70%', mb: 2, display: 'inline-block' }}
                             required
@@ -28,6 +45,9 @@ const ModalLogin = ({ open, handleClose }) => {
                     <Box>
                         <Typography variant='caption' sx={{ width: '70%', display: 'inline-block' }} >Contraseña</Typography>
                         <TextField
+                            onChange={onInputChange}
+                            value={form.password}
+                            name="password"
                             size='small'
                             sx={{ width: '70%', mb: 1, display: 'inline-block' }}
                             id="outlined-password-input"
@@ -39,7 +59,7 @@ const ModalLogin = ({ open, handleClose }) => {
                         <Typography variant='caption' sx={{ width: '70%', mb: 4, display: 'inline-block' }} >Olvidates tu contraseña?</Typography>
                     </Box>
                     <Link href='/homeCanvas'>
-                        <Button variant="contained" color="success">
+                        <Button variant="contained" color="success" onClick={handleSubmit}>
                             LOGIN
                         </Button>
                     </Link>
