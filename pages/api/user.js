@@ -21,6 +21,22 @@ export const userApi = {
                 console.log('An error occurred:', error.response);
             });
     },
+    confirmUser: async (data) => {
+        console.log(data, 'data');
+        axios
+            .post('http://localhost:5000/artist/send-codEmail', data)
+            .then(response => {
+                // Handle success.
+                console.log(response.data.body.email);
+                console.log('Well done!');
+                // console.log('User profile', response.data.nickName);
+                // console.log('User token', response.data.password);
+            })
+            .catch(error => {
+                // Handle error.
+                console.log('An error occurred:', error.response);
+            });
+    },
     loginUser: async (data) => {
         console.log("Info a enviar", typeof (data), data)
         apiNode

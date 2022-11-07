@@ -41,7 +41,7 @@
 .modalCheckIn{
     position: absolute;
     width: 35%;
-    height: 65%;
+    height: 80%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -51,6 +51,10 @@
     padding: 20px;
     text-align: center;
 }
+
+                                                /* CHANGE PASSWORD*/
+
+
 
                                                 /* HOME DE LA PAGINA*/
 

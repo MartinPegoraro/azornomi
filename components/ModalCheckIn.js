@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { userApi } from '../pages/api/user';
 
 const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
-    const [form, setForm] = useState({ nickName: '', email: '', password: '', appRole: '' })
+    const [form, setForm] = useState({ nickName: '', email: '', password: '', appRole: '', codEmail: '' })
+    const [emailConfirm, setEmailConfirm] = useState(false)
 
     const onInputChange = ({ target }) => {
         const { name, value } = target;
@@ -16,7 +17,13 @@ const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
 
     const handleSubmit = () => {
         console.log(form);
+        setEmailConfirm(true)
         userApi.registerUser(form)
+    }
+
+    const handleSubmitConfirm = () => {
+        console.log(form);
+        userApi.confirmUser({ email: form.email, codEmail: form.codEmail })
     }
 
     return (
@@ -84,6 +91,24 @@ const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
                         Registrarse
                     </Button>
                     {/* </Link> */}
+                    {emailConfirm
+                        ?
+                        <Box sx={{ mt: 2 }}>
+                            <Box>
+                                <Typography variant='caption' sx={{ width: '70%', display: 'inline-block' }} >Codigo de Verificacion</Typography>
+                                <TextField
+                                    onChange={onInputChange}
+                                    name='codEmail'
+                                    value={form.codEmail}
+                                    size='small'
+                                    sx={{ width: '70%', mb: 2, display: 'inline-block' }}
+                                    required
+                                />
+                            </Box>
+                            <Button variant="contained" color="success" onClick={handleSubmitConfirm}>verificar</Button>
+                        </Box>
+                        : null
+                    }
                 </Box>
             </Modal>
         </>

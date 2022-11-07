@@ -18,6 +18,10 @@ const ModalLogin = ({ open, handleClose }) => {
         console.log(form);
         userApi.loginUser(form)
     }
+
+    const handleChangePass = () => {
+        console.log('cambiar la pass');
+    }
     return (
         <>
             <Modal
@@ -56,7 +60,9 @@ const ModalLogin = ({ open, handleClose }) => {
                         />
                     </Box>
                     <Box>
-                        <Typography variant='caption' sx={{ width: '70%', mb: 4, display: 'inline-block' }} >Olvidates tu contraseña?</Typography>
+                        <Button onClick={handleChangePass} color="secondary" sx={{ mb: 4 }}>
+                            <Typography variant='caption' sx={{ display: 'inline-block', textTransform: "capitalize" }} >Olvidates tu contraseña?</Typography>
+                        </Button>
                     </Box>
                     <Link href='/homeCanvas'>
                         <Button variant="contained" color="success" onClick={handleSubmit}>
