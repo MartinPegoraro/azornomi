@@ -60,9 +60,11 @@ const ModalLogin = ({ open, handleClose }) => {
                         />
                     </Box>
                     <Box>
-                        <Button onClick={handleChangePass} color="secondary" sx={{ mb: 4 }}>
-                            <Typography variant='caption' sx={{ display: 'inline-block', textTransform: "capitalize" }} >Olvidates tu contraseña?</Typography>
-                        </Button>
+                        <Link href='/changePassword'>
+                            <Button onClick={handleChangePass} color="secondary" sx={{ mb: 4 }}>
+                                <Typography variant='caption' sx={{ display: 'inline-block', textTransform: "capitalize" }} >Olvidate tu contraseña?</Typography>
+                            </Button>
+                        </Link>
                     </Box>
                     <Link href='/homeCanvas'>
                         <Button variant="contained" color="success" onClick={handleSubmit}>

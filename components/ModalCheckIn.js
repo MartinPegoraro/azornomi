@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { Typography, Box, Modal, Grid, IconButton, Button, TextField } from '@mui/material';
+import { Typography, Box, Modal, Grid, IconButton, Button, TextField, InputLabel, Select, MenuItem, FormControl } from '@mui/material';
 import Link from 'next/link';
 import { userApi } from '../pages/api/user';
 
 const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
     const [form, setForm] = useState({ nickName: '', email: '', password: '', appRole: '', codEmail: '' })
     const [emailConfirm, setEmailConfirm] = useState(false)
+    const [userExist, setUserExist] = useState(false)
+
 
     const onInputChange = ({ target }) => {
         const { name, value } = target;
@@ -15,16 +17,43 @@ const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
         });
     }
 
-    const handleSubmit = () => {
-        console.log(form);
-        setEmailConfirm(true)
-        userApi.registerUser(form)
+    const handleSubmit = async () => {
+        let expReg = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+        let isValidate = expReg.test(form.email)
+        if (!isValidate) {
+            alert('el correo no es valido')
+        } else {
+
+            if (form.appRole === 'artist') {
+                const resArtist = await userApi.registerUserArtist(form)
+                console.log(resArtist);
+                if (resArtist.data.status === 201) {
+                    setEmailConfirm(true)
+                    setUserExist(false)
+                } else[
+                    setUserExist(true)
+
+                ]
+            } else {
+                const resCanva = await userApi.registerUserCanva(form)
+                console.log(resCanva);
+                if (resCanva.data.status === 201) {
+                    setEmailConfirm(true)
+                    setUserExist(false)
+                } else {
+                    setUserExist(true)
+                }
+            }
+        }
+
     }
 
     const handleSubmitConfirm = () => {
         console.log(form);
         userApi.confirmUser({ email: form.email, codEmail: form.codEmail })
     }
+
+    console.log(form);
 
     return (
         <>
@@ -61,6 +90,10 @@ const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
                             required
                         />
                     </Box>
+                    {userExist
+                        &&
+                        <Typography variant='caption' sx={{ color: 'red' }}>El correo ingresado ya existe</Typography>
+                    }
                     <Box>
                         <Typography variant='caption' sx={{ width: '70%', display: 'inline-block' }} >Contraseña</Typography>
                         <TextField
@@ -74,16 +107,21 @@ const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
                             autoComplete="current-password"
                         />
                     </Box>
-                    <Box>
-                        <Typography variant='caption' sx={{ width: '70%', display: 'inline-block' }} >Role</Typography>
-                        <TextField
+                    <Box sx={{}}>
+                        {/* <InputLabel id="demo-simple-select-label">Rol</InputLabel> */}
+                        <Typography variant='caption' sx={{ width: '70%', display: 'inline-block' }} >Rol</Typography>
+
+                        <Select
+                            sx={{ width: '40%', mb: 2, }}
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
                             name='appRole'
                             value={form.appRole}
                             onChange={onInputChange}
-                            size='small'
-                            sx={{ width: '70%', mb: 2, display: 'inline-block' }}
-                            required
-                        />
+                        >
+                            <MenuItem value='artist'>Artista</MenuItem>
+                            <MenuItem value='canva'>Lienzo</MenuItem>
+                        </Select>
                     </Box>
 
                     {/* <Link href='/homeCanvas'> */}
@@ -92,7 +130,7 @@ const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
                     </Button>
                     {/* </Link> */}
                     {emailConfirm
-                        ?
+                        &&
                         <Box sx={{ mt: 2 }}>
                             <Box>
                                 <Typography variant='caption' sx={{ width: '70%', display: 'inline-block' }} >Codigo de Verificacion</Typography>
@@ -107,7 +145,6 @@ const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
                             </Box>
                             <Button variant="contained" color="success" onClick={handleSubmitConfirm}>verificar</Button>
                         </Box>
-                        : null
                     }
                 </Box>
             </Modal>

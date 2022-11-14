@@ -2,14 +2,37 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import { useState, useEffect, useCallback } from 'react'
 import NavBar from './NavBar'
-import { Box, Typography, Grid, Button } from '@mui/material'
+import { Box, Typography, Grid, Button, TextField } from '@mui/material'
+import SendIcon from '@mui/icons-material/Send';
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:5000");
+
 export default function InboxMsg() {
     const router = useRouter()
     const stateUser = router.query.type
     const [dummyData, setDummyData] = useState([])
+    const [message, setMassage] = useState('')
+
+
+    const onInputChange = ({ target }) => {
+        const { value } = target;
+        setMassage(value);
+    }
 
     console.log(router.query, 'router');
     const imgUser = router.query.img
+
+    const sendMessage = () => {
+        const user = localStorage.getItem('user')
+        const formMessage = {
+            idChat: '1',
+            message: message,
+            idArtist: user.appRole === 'artist' ? user._id : null,
+            idCanva: user.appRole === 'canva' ? user._id : null
+        }
+        // socket.emit('newMessage', formMessage)
+    }
 
     const fetchData = useCallback(async () => {
         const typeUser = router.query.type
@@ -34,6 +57,7 @@ export default function InboxMsg() {
 
     useEffect(() => {
         fetchData()
+        socket.emit("join")
     }, [fetchData])
 
     console.log(dummyData);
@@ -73,13 +97,26 @@ export default function InboxMsg() {
                         </Grid>
                     </Grid>
                     <Grid item xs={5.5} >
-                        <Box className='hola2' sx={{ border: 1, m: 2, ml: 20, mr: 10, height: '80vh', borderRadius: 3 }}>
+                        <Box sx={{ border: 1, m: 2, ml: 20, mr: 10, height: '80vh', borderRadius: 3 }}>
                             <Box sx={{ height: '90%', width: '100%' }}></Box>
-                            <Button className='inputSave' sx={{ height: '5%', width: '80%', border: 0.5, borderRadius: 2, background: 'white' }}>
-                                <Typography variant='caption' sx={{ color: 'rgb(202, 200, 200)', textAlign: 'left' }}> Escriba un mensaje aqui</Typography>
-                            </Button>
+                            <Grid container>
+                                <Grid item xs={10}>
+                                    <TextField
+                                        size='small'
+                                        sx={{ width: '95%', background: 'rgb(241, 241, 241)', ml: '1%' }}
+                                        variant="outlined"
+                                        required
+                                        id="outlined-required"
+                                        placeholder='Escriba un mensaje aqui'
+                                    />
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <Button variant='contained'>
+                                        <SendIcon />
+                                    </Button>
+                                </Grid>
+                            </Grid>
                         </Box>
-
                     </Grid>
                 </Grid>
                 :
@@ -115,11 +152,26 @@ export default function InboxMsg() {
                         </Grid>
                     </Grid>
                     <Grid item xs={5.5} >
-                        <Box className='hola' sx={{ border: 1, m: 2, ml: 20, mr: 10, height: '80vh', borderRadius: 3 }}>
+                        <Box sx={{ border: 1, m: 2, ml: 20, mr: 10, height: '80vh', borderRadius: 3 }}>
                             <Box sx={{ height: '90%', width: '100%' }}></Box>
-                            <Button className='inputSave' sx={{ height: '5%', width: '80%', border: 0.5, borderRadius: 2, background: 'white' }}>
-                                <Typography variant='caption' sx={{ color: 'rgb(202, 200, 200)', textAlign: 'left' }}> Escriba un mensaje aqui</Typography>
-                            </Button>
+                            <Grid container>
+                                <Grid item xs={10}>
+                                    <TextField
+                                        onChange={onInputChange}
+                                        size='small'
+                                        sx={{ width: '95%', background: 'rgb(241, 241, 241)', ml: '1%' }}
+                                        variant="outlined"
+                                        required
+                                        id="outlined-required"
+                                        placeholder='Escriba un mensaje aqui'
+                                    />
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <Button variant='contained' onClick={sendMessage}>
+                                        <SendIcon />
+                                    </Button>
+                                </Grid>
+                            </Grid>
                         </Box>
 
                     </Grid>

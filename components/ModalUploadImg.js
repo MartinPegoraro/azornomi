@@ -7,14 +7,12 @@ import Link from 'next/link';
 
 
 const ModalUpImg = ({ openUploadImg, handleCloseUploadImg }) => {
-    const [img, setImg] = useState([])
+    const [img, setImg] = useState(undefined)
     const [imgUrl, setImgUrl] = useState('')
     const [open, setOpen] = useState({ status: false, message: '' })
 
     const handleChange = (e) => {
-        console.log(e.target.files[0])
-        setImg(e.target.files[0])
-        // console.log(URL.createObjectURL(e.target.files[0]));
+        setImg(URL.createObjectURL(e.target.files[0]))
     }
 
     const handleClick = (e) => {
@@ -59,7 +57,7 @@ const ModalUpImg = ({ openUploadImg, handleCloseUploadImg }) => {
                             <Box className='buttonImgUpload'>
                                 < img
                                     className='imgUpload'
-                                    src={`/img/${img.name}`}
+                                    src={img}
                                     width={200}
                                     height={200}
                                     alt='img'
