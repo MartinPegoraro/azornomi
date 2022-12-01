@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import ChatIcon from '@mui/icons-material/Chat';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import { Typography, Box, Modal, Grid, IconButton } from '@mui/material';
 import Link from 'next/link';
+import { pink } from '@mui/material/colors';
+import { userApi } from '../pages/api/user';
 
 const style = {
     position: 'absolute',
@@ -19,7 +22,36 @@ const style = {
 };
 
 
-const ModalInfoCanva = ({ handleClose, open, dataModal }) => {
+const ModalInfoCanva = ({ handleClose, open, dataModal, user }) => {
+    const [saveImg, setSaveImg] = useState(false)
+    const [userLocalStorage, setUserLocalStorage] = useState()
+
+    const handleClick = () => {
+        setSaveImg(true)
+    }
+
+    const handleClickDelete = () => {
+        setSaveImg(false)
+    }
+
+    const axiosData = useCallback(async () => {
+        // let localStorageId = JSON.parse(localStorage.getItem('user'))
+        // await setUserLocalStorage(JSON.parse(localStorage.getItem('user')))
+        // const formData = {
+        //     idImage: dataModal?._id,
+        //     idUserSaveImg: userLocalStorage?._id,
+        //     idUserCreateImg: user?._id,
+        //     imageId: dataModal?.imageId
+        // }
+        // // setForm({ userLocalStorage?._id, dataModal?.imageId, user?._id })
+        // const foundSaveImg = await userApi.getSaveImg(formData)
+    }, [])
+
+    console.log(dataModal);
+    useEffect(() => {
+        axiosData()
+    }, [axiosData])
+
     return (
         <div>
             <Modal
@@ -31,7 +63,7 @@ const ModalInfoCanva = ({ handleClose, open, dataModal }) => {
                 <Grid container className='modalImg' >
                     <Grid item xs={5}>
                         <img className='img'
-                            src={dataModal.img}
+                            src={`https://azoromi-img.s3.sa-east-1.amazonaws.com/imgUpload/${dataModal?.imageId}.jpg`}
                             width='100%'
                             height='100%'
                             alt='img'
@@ -41,7 +73,7 @@ const ModalInfoCanva = ({ handleClose, open, dataModal }) => {
                         <Box sx={{ width: '100%', mt: '5%', mb: '55%', textAlign: 'center' }}>
                             <Link href={{
                                 pathname: `/profile/[id]/inbox/[idMsg]`,
-                                query: { id: dataModal.artistId + dataModal.type, idMsg: dataModal.artistId, type: dataModal.type, img: dataModal.img }
+                                query: { id: user?._id, img: dataModal?.imageId }
                             }}><a>
                                     <IconButton >
                                         <ChatIcon className='iconModal' />
@@ -53,7 +85,7 @@ const ModalInfoCanva = ({ handleClose, open, dataModal }) => {
                         <Box sx={{ width: '100%', mb: '55%', textAlign: 'center' }}>
                             <Link href={{
                                 pathname: '/profile/[id]',
-                                query: { id: dataModal.artistId, type: dataModal.type }
+                                query: { id: user?._id }
                             }} ><a>
                                     <IconButton >
                                         <AccountCircleIcon className='iconModal' />
@@ -62,25 +94,28 @@ const ModalInfoCanva = ({ handleClose, open, dataModal }) => {
                                 </a>
                             </Link>
                         </Box>
-                        <Box sx={{ width: '100%', textAlign: 'center' }}>
-                            <IconButton >
-                                <TurnedInNotIcon className='iconModal' />
-                            </IconButton>
-                            <Typography variant='h6'>Guardar</Typography>
+                        {
+                            saveImg ?
+                                <Box sx={{ width: '100%', textAlign: 'center' }} >
+                                    <IconButton onClick={handleClickDelete}>
+                                        <BookmarkIcon sx={{ color: 'red', width: 45, height: 45 }} />
+                                    </IconButton>
+                                    <Typography variant='h6' >Guardar</Typography>
 
-                        </Box>
+                                </Box>
+                                :
+                                <Box sx={{ width: '100%', textAlign: 'center' }}>
+                                    <IconButton onClick={handleClick}>
+                                        <TurnedInNotIcon className='iconModal' />
+                                    </IconButton>
+                                    <Typography variant='h6' >Guardar</Typography>
+
+                                </Box>
+                        }
                     </Grid>
                     <Grid item xs={5}>
                         <Box className='boxModal' sx={{ p: 2 }}>
-                            <Typography variant='h5' sx={{ p: 2, textAlign: 'center' }}>{dataModal.artistName} {dataModal.artistLastName}</Typography>
-                            <Typography className='tagsModalContainer' variant='h5'> Styles: {dataModal.artistStyle.map((style) => {
-                                return (
-                                    <>
-                                        <Typography className='tagsModal' variant='h6'>{style},</Typography>
-                                    </>
-                                )
-                            })}</Typography>
-                            <Typography variant='h8'>
+                            <Typography variant='h5' sx={{ p: 2, textAlign: 'center' }}>{user?.nickName} {user?.lastName}</Typography>                            <Typography variant='h8'>
                                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
                             </Typography>
 

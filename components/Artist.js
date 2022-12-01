@@ -4,23 +4,30 @@ import InfoIcon from '@mui/icons-material/Info';
 import { useState, useEffect } from 'react'
 import Modal from './ModalInfoArtist';
 import axios from 'axios';
+import { userApi } from '../pages/api/user';
 
 
 export default function Artist() {
     const [dummyData, setDummyData] = useState([])
     const [dataModal, setDataModal] = useState({ artistId: '', artistName: '', artistLastName: '', artistStyle: [], img: '' })
     const [open, setOpen] = useState(false);
+    const [imgArtist, setImgArtist] = useState([])
+    const [user, setUser] = useState()
 
-    const handleOpen = (artist, img) => {
-        setDataModal({ ...artist, img: img })
+    const handleOpen = async (image) => {
+        const resArtist = await userApi.getOneArtist(image.userPost)
+        if (resArtist?.data.status === 200) {
+
+        }
+        setUser(resArtist?.data.body)
+        setDataModal(image)
         setOpen(true);
     }
     const handleClose = () => setOpen(false);
 
     const fetchData = async () => {
-        const res = await axios.get('/api/dummyData') // Se vuelve a traer todos los datosControlador
-        const data = await res.data
-        setDummyData(data)
+        const res = await userApi.getAllArtist()
+        setImgArtist(res?.data.body)
     }
 
     useEffect(() => {
@@ -29,44 +36,30 @@ export default function Artist() {
 
     return (
         <div>
-            <Modal handleClose={handleClose}
+            <Modal
+                handleClose={handleClose}
                 open={open}
-                dataModal={dataModal} />
+                dataModal={dataModal}
+                user={user}
+            />
             <Box className='gridContainer'>
-                {dummyData.map((art) => {
+                {imgArtist.map((image) => {
                     return (
-                        <List key={art.artistId}>
-                            {
-                                art.artistImg.map((img) => {
-                                    return (
-                                        <Button className='buttonImg' key={img.title} onClick={() => handleOpen(art, img.img)}>
-                                            <ImageListItem >
-                                                <img className='imgHome'
-                                                    // src={img.img}
-                                                    src={`${img.img}?w=248&fit=crop&auto=format`}
-                                                    srcSet={`${img.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                                    width={300}
-                                                    height={300}
-                                                    alt='img'
-                                                />
-                                                <ImageListItemBar
-                                                    className='infoImg'
-                                                    title={img.title}
-                                                    subtitle={art.artistName + art.artistLastName}
-                                                    actionIcon={
-                                                        <IconButton
-                                                            sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                                                            aria-label={`info about ${img.title}`}
-                                                        >
-                                                            <InfoIcon />
-                                                        </IconButton>
-                                                    }
-                                                />
-                                            </ImageListItem>
-                                        </Button>
-                                    )
-                                })
-                            }
+                        <List key={image._id}>
+                            <Button className='buttonImg' onClick={() => handleOpen(image)}>
+                                <ImageListItem >
+                                    <img className='imgHome'
+                                        src={`https://azoromi-img.s3.sa-east-1.amazonaws.com/imgUpload/${image.imageId}.jpg`}
+                                        width={300}
+                                        height={300}
+                                        alt='img'
+                                    />
+                                    <ImageListItemBar
+                                        className='infoImg'
+                                        title={image.description}
+                                    />
+                                </ImageListItem>
+                            </Button>
                         </List >
                     )
                 })}

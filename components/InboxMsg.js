@@ -2,36 +2,45 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import { useState, useEffect, useCallback } from 'react'
 import NavBar from './NavBar'
-import { Box, Typography, Grid, Button, TextField } from '@mui/material'
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { Box, Typography, Grid, Button, TextField, List, ListItem } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send';
 import { io } from "socket.io-client";
+
 
 const socket = io("http://localhost:5000");
 
 export default function InboxMsg() {
+
     const router = useRouter()
     const stateUser = router.query.type
     const [dummyData, setDummyData] = useState([])
-    const [message, setMassage] = useState('')
+    const [message, setMessage] = useState('')
+    const [messages, setMessages] = useState([])
+    const [idChat, setIdChat] = useState('')
+    const [idUserActual, setIdUseractual] = useState('')
 
+    let idOtherUser = router.query.id
+    console.log(idOtherUser);
 
-    const onInputChange = ({ target }) => {
-        const { value } = target;
-        setMassage(value);
+    const onInputChange = (e) => {
+        setMessage(e.target.value);
     }
 
-    console.log(router.query, 'router');
     const imgUser = router.query.img
 
     const sendMessage = () => {
-        const user = localStorage.getItem('user')
+        let idActualUser = JSON.parse(localStorage.getItem('user'))
         const formMessage = {
-            idChat: '1',
+            idChat: idChat,
             message: message,
-            idArtist: user.appRole === 'artist' ? user._id : null,
-            idCanva: user.appRole === 'canva' ? user._id : null
+            idUserMsg: idActualUser._id,
+            idArtist: idActualUser.appRole === 'artist' ? idActualUser._id : null,
+            idCanva: idActualUser.appRole === 'canva' ? idActualUser._id : null
         }
-        // socket.emit('newMessage', formMessage)
+        // console.log(formMessage);
+        socket.emit('newMessage', formMessage)
+        setMessage({ msg: '' })
     }
 
     const fetchData = useCallback(async () => {
@@ -56,12 +65,33 @@ export default function InboxMsg() {
     }, [router])
 
     useEffect(() => {
-        fetchData()
-        socket.emit("join")
-    }, [fetchData])
+        let idActualUser = JSON.parse(localStorage.getItem('user'))
+        setIdUseractual(JSON.parse(localStorage.getItem('user')))
+        // socket.emit("join", idActualUser._id, idOtherUser, idActualUser.appRole);
+        socket.emit("join", idActualUser._id, '6373a0ee826b3416ee88d212', idActualUser.appRole);
 
-    console.log(dummyData);
+        socket.on("messagesSaved", (foundchat, msgInChat) => {
+            // console.log('msgInChat', msgInChat, foundchat);
+            setMessages(msgInChat)
+            setIdChat(foundchat._id)
 
+        });
+        socket.on("emitNewMessage", (newMessage) => {
+            console.log(messages, 'messages');
+            console.log(newMessage, 'newMessage');
+            setMessages(arr => [...arr, newMessage]);
+            // const pushMsg = messages.push(newMessage)
+        });
+        return () => {
+            socket.off();
+        };
+    }, []);
+
+    // console.log(messages, '123');
+
+    // useEffect(() => {
+    //     fetchData()
+    // }, [fetchData])
     return (
         <>
             <NavBar stateUser={stateUser} />
@@ -153,11 +183,35 @@ export default function InboxMsg() {
                     </Grid>
                     <Grid item xs={5.5} >
                         <Box sx={{ border: 1, m: 2, ml: 20, mr: 10, height: '80vh', borderRadius: 3 }}>
-                            <Box sx={{ height: '90%', width: '100%' }}></Box>
+                            <Box sx={{ height: '90%', width: '100%', overflow: 'auto' }}>
+                                {messages?.map((msg, index) => {
+                                    // console.log(msg);
+                                    return (
+                                        <>
+                                            {idUserActual._id === msg?.idUserMsg ?
+
+                                                <List key={index} sx={{ mt: 1, ml: '50%', width: '45%', maxWidth: 360, border: '0.3px solid black', borderRadius: 3 }}>
+                                                    <ListItem >
+                                                        <Typography variant='caption' sx={{ color: 'blue' }}>{msg?.message}</Typography>
+                                                    </ListItem>
+                                                </List>
+                                                :
+                                                <List key={index} sx={{ mt: 1, ml: 1, width: '45%', maxWidth: 360, bgcolor: 'grey', border: '0.3px solid black', borderRadius: 3 }}>
+                                                    <ListItem >
+                                                        <Typography variant='caption' sx={{ color: 'red' }}>{msg?.message}</Typography>
+                                                    </ListItem>
+                                                </List>
+                                            }
+                                        </>
+                                    )
+                                })}
+                            </Box>
                             <Grid container>
-                                <Grid item xs={10}>
+                                <Grid item xs={10} sx={{ mt: 1 }}>
                                     <TextField
                                         onChange={onInputChange}
+                                        value={message.msg}
+                                        name='msg'
                                         size='small'
                                         sx={{ width: '95%', background: 'rgb(241, 241, 241)', ml: '1%' }}
                                         variant="outlined"
@@ -166,7 +220,7 @@ export default function InboxMsg() {
                                         placeholder='Escriba un mensaje aqui'
                                     />
                                 </Grid>
-                                <Grid item xs={2}>
+                                <Grid item xs={2} sx={{ mt: 1 }}>
                                     <Button variant='contained' onClick={sendMessage}>
                                         <SendIcon />
                                     </Button>

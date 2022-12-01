@@ -20,7 +20,7 @@ const style = {
 };
 
 
-const ModalInfoArtisti = ({ handleClose, open, dataModal }) => {
+const ModalInfoArtisti = ({ handleClose, open, dataModal, user }) => {
     const router = useRouter()
     return (
         <div>
@@ -33,7 +33,7 @@ const ModalInfoArtisti = ({ handleClose, open, dataModal }) => {
                 <Grid container className='modalImg' >
                     <Grid item xs={5}>
                         <img className='img'
-                            src={dataModal.img}
+                            src={`https://azoromi-img.s3.sa-east-1.amazonaws.com/imgUpload/${dataModal?.imageId}.jpg`}
                             width='100%'
                             height='100%'
                             alt='img'
@@ -43,7 +43,7 @@ const ModalInfoArtisti = ({ handleClose, open, dataModal }) => {
                         <Box sx={{ width: '100%', mt: '5%', mb: '55%', textAlign: 'center' }}>
                             <Link href={{
                                 pathname: `/profile/[id]/inbox/[idMsg]`,
-                                query: { id: dataModal.lienzoId + "?" + dataModal.type, idMsg: dataModal.lienzoId, type: dataModal.type, img: dataModal.img }
+                                query: { id: user?._id, img: dataModal?.imageId }
                             }} ><a>
                                     <IconButton >
                                         <ChatIcon className='iconModal' />
@@ -55,7 +55,7 @@ const ModalInfoArtisti = ({ handleClose, open, dataModal }) => {
                         <Box sx={{ width: '100%', mb: '55%', textAlign: 'center' }}>
                             <Link href={{
                                 pathname: '/profile/[id]',
-                                query: { id: dataModal.lienzoId, type: dataModal.type }
+                                query: { id: user?._id }
                             }} ><a>
                                     <IconButton >
                                         <AccountCircleIcon className='iconModal' />
@@ -73,14 +73,15 @@ const ModalInfoArtisti = ({ handleClose, open, dataModal }) => {
                     </Grid>
                     <Grid item xs={5}>
                         <Box className='boxModal' sx={{ p: 2 }}>
-                            <Typography variant='h5' sx={{ p: 2, textAlign: 'center' }}>{dataModal.lienzoName} {dataModal.lienzoLastName}</Typography>
-                            <Typography className='tagsModalContainer' variant='h5'>Preference: {dataModal.preference.map((style) => {
+                            <Typography variant='h5' sx={{ p: 2, textAlign: 'center' }}>{user?.nickName}</Typography>
+                            <Typography variant='h5' sx={{ p: 2, textAlign: 'center' }}>{user?.firstName} {user?.lastName}</Typography>
+                            {/* <Typography className='tagsModalContainer' variant='h5'>Preference: {dataModal.preference.map((style) => {
                                 return (
                                     <>
                                         <Typography className='tagsModal' variant='h6'>{style},</Typography>
                                     </>
                                 )
-                            })}</Typography>
+                            })}</Typography> */}
                             <Typography variant='h8'>
                                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
                             </Typography>

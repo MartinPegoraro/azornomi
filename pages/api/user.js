@@ -1,4 +1,4 @@
-import { apiStrapi, apiNode, apiArtist, apiCanva } from "./base"
+import { apiStrapi, apiNode, apiArtist, apiCanva, apiImage, apiSaveImg } from "./base"
 import axios from "axios"
 
 // /api/auth/local/register
@@ -23,7 +23,6 @@ export const userApi = {
         try {
             const response = await apiArtist
                 .post("/", data)
-            console.log(response);
             return response
 
         } catch (error) {
@@ -33,10 +32,8 @@ export const userApi = {
     },
     registerUserCanva: async (data) => {
         try {
-            console.log(data, 'dentro del try ')
             const response = await apiCanva
                 .post("/", data)
-            console.log(response);
             return response
 
         } catch (error) {
@@ -44,21 +41,29 @@ export const userApi = {
             return error.response
         }
     },
-    confirmUser: async (data) => {
-        console.log(data, 'data');
-        axios
-            .post('http://localhost:5000/artist/send-codEmail', data)
-            .then(response => {
-                // Handle success.
-                console.log(response.data.body.email);
-                console.log('Well done!');
-                // console.log('User profile', response.data.nickName);
-                // console.log('User token', response.data.password);
-            })
-            .catch(error => {
-                // Handle error.
-                console.log('An error occurred:', error.response);
-            });
+    confirmUserArtist: async (data) => {
+        try {
+            const response = await apiArtist
+                .post("/send-codEmail", data)
+            // console.log(response);
+            return response
+
+        } catch (error) {
+            console.log(error);
+            return error.response
+        }
+    },
+    confirmUserCanva: async (data) => {
+        try {
+            const response = await apiCanva
+                .post("/send-codEmail", data)
+            // console.log(response);
+            return response
+
+        } catch (error) {
+            console.log(error);
+            return error.response
+        }
     },
     loginUser: async (data) => {
         console.log("Info a enviar", typeof (data), data)
@@ -120,7 +125,6 @@ export const userApi = {
             return error.response
         }
     },
-
     forgetPassword: async (data) => {
         console.log("cambiar contrasena api", data)
         try {
@@ -130,7 +134,82 @@ export const userApi = {
         } catch (error) {
             console.log(error.response);
         }
-    }
+    },
+    getAllCanva: async (data) => {
+        try {
+            const response = await apiImage
+                .get('/getAllCanva')
+            return response
+        } catch (error) {
+            console.log(error.response);
+        }
+    },
+    getAllArtist: async (data) => {
+        try {
+            const response = await apiImage
+                .get('/getAllArtist')
+            return response
+        } catch (error) {
+            console.log(error.response);
+        }
+    },
+    getOneCanva: async (id) => {
+        // console.log(data);
+        try {
+            const response = await apiCanva
+                .get(`/${id}`)
+            return response
+        } catch (error) {
+            console.log(error.response);
+        }
+    },
+    getOneArtist: async (id) => {
+        // console.log(data);
+        try {
+            const response = await apiArtist
+                .get(`/${id}`)
+            return response
+        } catch (error) {
+            console.log(error.response);
+        }
+    },
+    getOneUser: async (id) => {        // aca ya se obtienen los 2 tipos de user
+        try {
+            const res = await apiCanva.get(`/user/${id}`)
+            return res.data.body
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    updateCanva: async (user, formData) => {
+        try {
+            const res = await apiCanva.patch(`/${user._id}`, formData)
+            return res
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    updateArtist: async (user, formData) => {
+        try {
+            const res = await apiArtist.patch(`/${user._id}`, formData)
+            return res
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    getSaveImg: async (data) => {
+        try {
+            console.log(data, 'daataa');
+            const response = await apiSaveImg
+                .post(`/getImgSave`, data)
+            return response
+        } catch (error) {
+            console.log(error.response);
+        }
+    },
 }
 
 

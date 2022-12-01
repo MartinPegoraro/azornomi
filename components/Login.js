@@ -16,15 +16,12 @@ export default function Login({ stateUser }) {
     const handleClick = async (e) => {
         console.log(value, 'value en habldeclick');
         const res = await axios.post('/api/dummyData', {
-
-
             "artistId": Date.now(),
             "type": value,
             "photoProfile": "https://e7.pngegg.com/pngimages/535/292/png-clipart-martin-palermo-boca-juniors-football-player-sport-football-tshirt-sport-thumbnail.png",
             "artistName": "Silvia",
             "artistLastName": "Ojeda",
             "artistStyle": ["tradicional", "dibujos", "Animados"],
-
         })
         const data = await res.data
         console.log(data);

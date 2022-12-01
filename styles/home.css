@@ -183,9 +183,7 @@
     color: black;
 }
 
-
                                                 /* ------        CSS PROFILE           -------*/
-
 .gridContainerProfile {
     background-color: rgb(234, 234, 234);
     border-radius: 10px;
@@ -204,15 +202,15 @@
 .imgProfile{
     border-radius: 10px;
     object-fit: cover;
+    border: 0.5px solid rgb(0, 0, 0);
 
 }
-
 
                                                 /*          CSS MODAL SETTINGS          */
 .modalSettings{
     position: absolute;
     width: 70%;
-    height: 55%;
+    height: 65%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -227,7 +225,7 @@
 .modalUploadImg{
     position: absolute;
     width: 25%;
-    height: 70%;
+    height: 90%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -238,7 +236,6 @@
 }
 
 .buttonImgUpload{
-    width: 210px; /* Estilo pinteres*/
     border-radius: 10px;
     display: inline;
 }

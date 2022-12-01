@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Box, Grid, Button, Avatar, IconButton } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
@@ -11,6 +11,12 @@ import useStatesHome from '../hook/useStatesHome';
 
 export default function NavBar({ stateUser }) {
     const [state, setState] = useState('')
+    const [user, setUser] = useState(null)
+
+
+    useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem('user')))
+    }, [])
 
     const handleClick = (e) => {
         if (e.target.value === 'lienzo') {
@@ -72,9 +78,12 @@ export default function NavBar({ stateUser }) {
                     </Link>
                 </Grid>
                 <Grid item xs={0.5} sx={{ position: 'relative' }} >
-                    <IconButton sx={{ p: 0 }} className='iconButton' size='medium'>
-                        < AccountCircleIcon sx={{ fontSize: 30 }} />
-                    </IconButton>
+                    <Link href={{ pathname: `/profile/${user?._id}` }} >
+
+                        <IconButton sx={{ p: 0 }} className='iconButton' size='medium'>
+                            < AccountCircleIcon sx={{ fontSize: 30 }} />
+                        </IconButton>
+                    </Link>
                 </Grid>
 
             </Grid>

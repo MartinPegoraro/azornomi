@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Typography, Box, Modal, Grid, IconButton, Button, TextField, InputLabel, Select, MenuItem, FormControl } from '@mui/material';
+import { Typography, Box, Modal, Grid, IconButton, Button, TextField, InputLabel, Select, MenuItem, FormControl, Alert } from '@mui/material';
 import Link from 'next/link';
 import { userApi } from '../pages/api/user';
 
@@ -7,7 +7,7 @@ const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
     const [form, setForm] = useState({ nickName: '', email: '', password: '', appRole: '', codEmail: '' })
     const [emailConfirm, setEmailConfirm] = useState(false)
     const [userExist, setUserExist] = useState(false)
-
+    const [state, setState] = useState(false)
 
     const onInputChange = ({ target }) => {
         const { name, value } = target;
@@ -27,7 +27,7 @@ const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
             if (form.appRole === 'artist') {
                 const resArtist = await userApi.registerUserArtist(form)
                 console.log(resArtist);
-                if (resArtist.data.status === 201) {
+                if (resArtist?.data.status === 201) {
                     setEmailConfirm(true)
                     setUserExist(false)
                 } else[
@@ -37,7 +37,7 @@ const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
             } else {
                 const resCanva = await userApi.registerUserCanva(form)
                 console.log(resCanva);
-                if (resCanva.data.status === 201) {
+                if (resCanva?.data.status === 201) {
                     setEmailConfirm(true)
                     setUserExist(false)
                 } else {
@@ -48,12 +48,33 @@ const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
 
     }
 
-    const handleSubmitConfirm = () => {
-        console.log(form);
-        userApi.confirmUser({ email: form.email, codEmail: form.codEmail })
+    const handleSubmitConfirm = async () => {
+        console.log(form.appRole, 'form');
+        if (form.appRole === 'artist') {
+            const res = await userApi.confirmUserArtist({ email: form.email, codEmail: form.codEmail })
+            if (res?.data.status === 200) {
+                setState(true)
+                setTimeout(() => {
+                    setEmailConfirm(false)
+                    setForm('')
+                    setState(false)
+                    handleCloseCheckIn()
+                }, 2500)
+            }
+        } else {
+            const res = await userApi.confirmUserCanva({ email: form.email, codEmail: form.codEmail })
+            if (res?.data.status === 200) {
+                setState(true)
+                setTimeout(() => {
+                    setEmailConfirm(false)
+                    setForm('')
+                    setState(false)
+                    handleCloseCheckIn()
+                }, 2500)
+            }
+        }
+        // handleCloseCheckIn()
     }
-
-    console.log(form);
 
     return (
         <>
@@ -143,7 +164,12 @@ const ModalCheckIn = ({ openChekIn, handleCloseCheckIn }) => {
                                     required
                                 />
                             </Box>
-                            <Button variant="contained" color="success" onClick={handleSubmitConfirm}>verificar</Button>
+                            <Button variant="contained" color="success" onClick={handleSubmitConfirm}>Verificar</Button>
+                            {
+                                state === true
+                                &&
+                                <Alert sx={{ width: '100%', p: 0, pl: 1, mt: 1 }} variant="filled" severity="success">Se verifico correctamente</Alert>
+                            }
                         </Box>
                     }
                 </Box>

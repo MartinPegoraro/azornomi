@@ -12,15 +12,17 @@ import { useRouter } from 'next/router';
 import { height } from '@mui/system';
 import ModalSettings from './ModalSettings';
 import ModalUploadImg from './ModalUploadImg';
+import { userApi } from '../pages/api/user';
 
 
 export default function Profile() {
-    const [dummyData, setDummyData] = useState({ lienzoImg: [] })
+    const [user, setUser] = useState()
+    const [userLocalStorage, setUserLocalStorage] = useState()
+
     const [open, setOpen] = useState(false);
     const [openUploadImg, setOpenUploadImg] = useState(false);
 
     const router = useRouter()
-    console.log(router.query, 'router');
 
     const handleOpenUploadImg = () => {
         setOpenUploadImg(true);
@@ -34,83 +36,91 @@ export default function Profile() {
     }
     const handleClose = () => setOpen(false);
 
-    const fetchData = useCallback(async () => {
-        const typeUser = router.query.type
-        const idUser = parseInt(router.query.id)
-        const resLienzo = await fetch('/api/dummyDataLienzo')
-        const resArtist = await fetch('/api/dummyData')
-        const dataLienzo = await resLienzo.json()
-        const dataArtisti = await resArtist.json()
-        if (typeUser === 'artista') {
-            const newData = dataArtisti.find((user) => {
-                return user.artistId === idUser
-            })
-            setDummyData(newData)
+    // const fetchData = useCallback(async () => {
+    //     const typeUser = router.query.type
+    //     const idUser = parseInt(router.query.id)
+    //     const resLienzo = await fetch('/api/dummyDataLienzo')
+    //     const resArtist = await fetch('/api/dummyData')
+    //     const dataLienzo = await resLienzo.json()
+    //     const dataArtisti = await resArtist.json()
+    //     if (typeUser === 'artista') {
+    //         const newData = dataArtisti.find((user) => {
+    //             return user.artistId === idUser
+    //         })
+    //         setDummyData(newData)
 
-        } else {
-            const newData = dataLienzo.find((user) => {
-                return user.lienzoId === idUser
-            })
-            setDummyData(newData)
-        }
+    //     } else {
+    //         const newData = dataLienzo.find((user) => {
+    //             return user.lienzoId === idUser
+    //         })
+    //         setDummyData(newData)
+    //     }
+    // }, [router])
+    const fetchData = useCallback(async () => {
+        setUserLocalStorage(JSON.parse(localStorage.getItem('user')))
+        const idUser = router.query.id
+        const resUser = await userApi.getOneUser(idUser)
+        console.log(resUser, 'resUser');
+
+        setUser(resUser)
     }, [router])
 
     useEffect(() => {
         fetchData();
     }, [fetchData])
 
-    console.log(dummyData);
-
+    console.log(user);
     return (
         <>
-            <ModalSettings handleClose={handleClose}
+            <ModalSettings
+                handleClose={handleClose}
                 open={open}
+                user={user}
             />
             <ModalUploadImg handleCloseUploadImg={handleCloseUploadImg}
                 openUploadImg={openUploadImg}
             />
             <Box sx={{ mx: 40, mb: 2, borderBottom: 1 }}>
                 <Grid container>
-                    {dummyData?.type === 'lienzo'
+                    {user?.appRole === 'canva'
                         ?
                         <>
                             <Grid item xs={2}>
                                 <Avatar
-                                    alt={dummyData?.lienzoName}
-                                    src={dummyData?.photoProfile}
+                                    src={`https://azoromi-img.s3.sa-east-1.amazonaws.com/imgUpload/${user?.imagesProfile}.jpg`}
                                     sx={{ width: 100, height: 100 }}
                                 />
                             </Grid>
                             <Grid item xs={6}>
                                 <Box>
                                     <Typography variant='h4'>
-                                        Lienzo
+                                        Perfil de Lienzo
                                     </Typography>
                                     <Typography variant='h6'>
-                                        Soy el lienzo {dummyData?.lienzoName}  {dummyData?.lienzoLastName}
+                                        {user?.nickName}  {user?.email}
                                     </Typography>
                                     <Typography variant='h6'>
-                                        {dummyData?.lienzoLastName}
+                                        {user?.nickName}
                                     </Typography>
                                 </Box>
                             </Grid>
-                            <Grid item xs={2}>
+                            {/* <Grid item xs={2}>
                                 <Link href={{
-                                    pathname: `/profile/${dummyData.lienzoId}?${dummyData.type}/inbox/[id]`,
-                                    query: { id: dummyData.lienzoId, type: dummyData.type }
+                                    pathname: `/profile/${user._id}/inbox/[id]`,
+                                    query: { id: user._id }
                                 }} ><a>
                                         <Button ca variant="outlined" size="small" sx={{ mt: 0.7, float: 'right' }}>
                                             <Typography variant='caption' sx={{ textTransform: 'capitalize', color: 'black' }}>Enviar mensaje</Typography>
                                         </Button>
                                     </a></Link>
-                            </Grid>
+                            </Grid> */}
                         </>
                         :
                         <>
                             <Grid item xs={2}>
                                 <Avatar
-                                    alt={dummyData?.artistName}
-                                    src={dummyData?.photoProfile}
+                                    alt={user?.nickName}
+                                    src={`https://azoromi-img.s3.sa-east-1.amazonaws.com/imgUpload/${user?.imagesProfile}.jpg`}
                                     sx={{ width: 100, height: 100 }}
                                 />
                             </Grid>
@@ -120,45 +130,57 @@ export default function Profile() {
                                         Artista
                                     </Typography>
                                     <Typography variant='h6'>
-                                        Soy el artista {dummyData?.artistName}{dummyData?.artistLastName}
+                                        Soy el artista {user?.lastName}{user?.firstName}
                                     </Typography>
                                     <Typography variant='h6'>
-                                        {dummyData?.artistLastName}
+                                        {user?.nickName}
                                     </Typography>
                                 </Box>
                             </Grid>
+
+                        </>
+
+                    }
+                    {
+                        user?._id === userLocalStorage?._id
+                            ?
+                            <>
+                                <Grid item xs={0.5}>
+                                    <IconButton onClick={handleOpenUploadImg}>
+                                        <UploadIcon />
+                                    </IconButton>
+
+                                </Grid>
+                                <Grid item xs={0.5}>
+                                    <Accordion sx={{ boxShadow: 'none', top: -5 }}>
+                                        <AccordionSummary
+                                            expandIcon={<IconButton><SettingsIcon /> </IconButton>}
+                                            aria-controls="panel1a-content"
+                                            id="panel1a-header"
+                                        />
+                                        <AccordionDetails sx={{ width: 200, boxShadow: '3px 3px 5px 5px rgb(239, 233, 233)', borderRadius: 5 }}>
+                                            <Button onClick={() => handleOpen()} sx={{ textTransform: 'capitalize', borderBottom: 1 }}>
+                                                Editar perfil
+                                            </Button>
+                                            <Link href='/changePassword'>
+                                                <Button sx={{ textTransform: 'capitalize', borderBottom: 1 }} >
+                                                    Cambiar contraseña
+                                                </Button>
+                                            </Link>
+                                            <Button sx={{ textTransform: 'capitalize', borderBottom: 1 }}>
+                                                Cerrar seccion
+                                            </Button>
+                                        </AccordionDetails>
+                                    </Accordion>
+                                </Grid>
+                            </>
+                            :
                             <Grid item xs={2}>
                                 <Button ca variant="outlined" size="small" sx={{ mt: 0.7, float: 'right' }}>
                                     <Typography variant='caption' sx={{ textTransform: 'capitalize', color: 'black' }}>Enviar mensaje</Typography>
                                 </Button>
                             </Grid>
-                        </>
-
                     }
-
-                    <Grid item xs={0.5}>
-                        <IconButton onClick={handleOpenUploadImg}>
-                            <UploadIcon />
-                        </IconButton>
-
-                    </Grid>
-                    <Grid item xs={0.5}>
-                        <Accordion sx={{ boxShadow: 'none', top: -5 }}>
-                            <AccordionSummary
-                                expandIcon={<IconButton><SettingsIcon /> </IconButton>}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                            />
-                            <AccordionDetails sx={{ width: 150, boxShadow: '3px 3px 5px 5px rgb(239, 233, 233)', borderRadius: 5 }}>
-                                <Button onClick={() => handleOpen()} sx={{ textTransform: 'capitalize', borderBottom: 1 }}>
-                                    Editar perfil
-                                </Button>
-                                <Button sx={{ textTransform: 'capitalize' }}>
-                                    Cerrar seccion
-                                </Button>
-                            </AccordionDetails>
-                        </Accordion>
-                    </Grid>
                 </Grid>
             </Box>
             <Box sx={{ mb: 2, mx: 70 }}>
@@ -168,52 +190,34 @@ export default function Profile() {
                             <GridOnIcon />Publicaciones
                         </Button>
                     </Grid>
-                    <Grid item xs={6}>
-                        <Button>
-                            <TurnedInNotIcon />Guardados
-                        </Button>
+                    {
+                        user?._id === userLocalStorage?._id
+                        &&
+                        <Grid item xs={6}>
+                            <Button>
+                                <TurnedInNotIcon />Guardados
+                            </Button>
 
-                    </Grid>
+                        </Grid>
+                    }
                 </Grid>
             </Box>
-            {dummyData?.type === 'lienzo'                            // SI ES IGUAL A ARTISTA 
-                ?
-                <Box className='gridContainerProfile' sx={{ mx: 40 }}>
-                    {dummyData?.lienzoImg?.map((img) => {
-                        return (
-                            <Button className='buttonImgProfile' key={img.title}>
-                                < img
-                                    className='imgProfile'
-                                    src={`${img.img}?w=248&fit=crop&auto=format`
-                                    }
-                                    srcSet={`${img.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                    width={200}
-                                    height={200}
-                                    alt='img'
-                                />
-                            </Button>
-                        )
-                    })}
-                </Box>
-                :                                                       // SI ES IGUAL A ARTISTA 
-                <Box className='gridContainerProfile' sx={{ mx: 40 }}>
-                    {dummyData?.artistImg?.map((img) => {
-                        return (
-                            <Button className='buttonImgProfile' key={img.title}>
-                                < img
-                                    className='imgProfile'
-                                    src={`${img.img}?w=248&fit=crop&auto=format`
-                                    }
-                                    srcSet={`${img.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                    width={200}
-                                    height={200}
-                                    alt='img'
-                                />
-                            </Button>
-                        )
-                    })}
-                </Box>
-            }
+            <Box className='gridContainerProfile' sx={{ mx: 40 }}>
+                {user?.imagesWork?.map((img, index) => {
+                    return (
+                        <Button className='buttonImgProfile' key={index}>
+                            < img
+                                className='imgProfile'
+                                src={`https://azoromi-img.s3.sa-east-1.amazonaws.com/imgUpload/${img?.imageId}.jpg`}
+                                width={200}
+                                height={200}
+                                alt='img'
+                            />
+                        </Button>
+                    )
+                })}
+            </Box>
+
         </>
     )
 }
