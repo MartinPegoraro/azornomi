@@ -9,7 +9,9 @@ import { io } from "socket.io-client";
 import { userApi } from '../pages/api/user';
 
 
-const socket = io("http://localhost:5000");
+// const socket = io("http://localhost:5000");
+const socket = io("http://54.94.62.103:3002");
+
 
 export default function InboxMsg() {
 

@@ -1,4 +1,4 @@
-import { apiStrapi, apiNode, apiArtist, apiCanva, apiImage, apiSaveImg } from "./base"
+import { apiNode, apiArtist, apiCanva, apiImage, apiSaveImg } from "./base"
 import axios from "axios"
 
 // /api/auth/local/register

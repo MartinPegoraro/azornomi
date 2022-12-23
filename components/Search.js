@@ -42,6 +42,7 @@ export default function Search() {
 
     const fetchData = async () => {
         const search = router.query.search
+
         const wordsArray = search?.split(' ')
 
         setUserLocalStorage(JSON.parse(localStorage.getItem('user')))
@@ -51,7 +52,7 @@ export default function Search() {
         ])
         const users = [...res[0]?.data.body, ...res[1]?.data.body]
         const dataUser = users.filter((user) => {
-            for (let index = 0; index < wordsArray.length; index++) {
+            for (let index = 0; index < wordsArray?.length; index++) {
                 const word = wordsArray[index].toLowerCase();
                 if (user?.firstName?.toLowerCase().includes(word)) return true
                 if (user?.lastName?.toLowerCase().includes(word)) return true
