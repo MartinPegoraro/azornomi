@@ -86,7 +86,7 @@ export default function Login({ stateUser }) {
                 <Grid container >
                     <Grid item xs={5} sx={{ height: 600 }}>
                         <img className='imgLogin'
-                            src='https://www.filo.news/__export/1603471624804/sites/claro/img/2020/10/23/imagenes-de-blog-innova-001.jpg_423682103.jpg'
+                            src='https://www.gente.com.ar/wp-content/uploads/2021/07/Imagen.jpg'
                             width='100%'
                             height='100%'
                             alt='img'

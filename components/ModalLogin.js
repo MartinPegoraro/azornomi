@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
-import { Typography, Box, Modal, Grid, IconButton, Button, TextField } from '@mui/material';
+import { Typography, Box, Modal, Grid, IconButton, Button, TextField, Alert } from '@mui/material';
 import Link from 'next/link';
+import { useRouter } from 'next/router'
 import { userApi } from '../pages/api/user';
 
 const ModalLogin = ({ open, handleClose }) => {
     const [form, setForm] = useState({ email: '', password: '' })
+    const [state, setState] = useState(false)
+
+    const router = useRouter()
 
     const onInputChange = ({ target }) => {
         const { name, value } = target;
@@ -14,9 +18,23 @@ const ModalLogin = ({ open, handleClose }) => {
         });
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         console.log(form);
-        userApi.loginUser(form)
+        const res = await userApi.loginUser(form)
+        if (res?.data.status === 201) {
+            localStorage.setItem("user", JSON.stringify(res.data.body.user))
+            localStorage.setItem("token", JSON.stringify(res.data.body.token))
+            if (res?.data.body.user.appRole === 'canva') {
+                router.push('/homeCanvas')
+            } else {
+                router.push('/homeArtist')
+            }
+        } else {
+            setState(true)
+            setTimeout(() => {
+                setState(false)
+            }, 2000);
+        }
     }
 
     const handleChangePass = () => {
@@ -62,15 +80,19 @@ const ModalLogin = ({ open, handleClose }) => {
                     <Box>
                         <Link href='/changePassword'>
                             <Button onClick={handleChangePass} color="secondary" sx={{ mb: 4 }}>
-                                <Typography variant='caption' sx={{ display: 'inline-block', textTransform: "capitalize" }} >Olvidate tu contraseña?</Typography>
+                                <Typography variant='caption' sx={{ display: 'inline-block', textTransform: "capitalize" }} >Olvidaste tu contraseña?</Typography>
                             </Button>
                         </Link>
                     </Box>
-                    <Link href='/homeCanvas'>
-                        <Button variant="contained" color="success" onClick={handleSubmit}>
-                            LOGIN
-                        </Button>
-                    </Link>
+                    {/* <Link href='/homeCanvas'> */}
+                    <Button variant="contained" color="success" onClick={handleSubmit}>
+                        LOGIN
+                    </Button>
+                    {state
+                        &&
+                        <Alert sx={{ mt: 2 }} variant="filled" severity="error">Usuario o contraseña incorrecta </Alert>
+                    }
+                    {/* </Link> */}
                 </Box>
             </Modal>
         </>

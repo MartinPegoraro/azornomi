@@ -22,35 +22,33 @@ const style = {
 };
 
 
-const ModalInfoCanva = ({ handleClose, open, dataModal, user }) => {
-    const [saveImg, setSaveImg] = useState(false)
+const ModalInfoCanva = ({ handleClose, open, dataModal, user, publicationSave }) => {
+    const [saveImg, setSaveImg] = useState('')
     const [userLocalStorage, setUserLocalStorage] = useState()
 
-    const handleClick = () => {
-        setSaveImg(true)
+    const handleClick = async () => {
+        const saveImgUser = await userApi.savePublication(publicationSave?._id, true)
+        console.log(saveImgUser.data.body.savedImg, saveImgUser.data.body._id, 'handleClick');
+        setSaveImg(saveImgUser.data.body.savedImg)
     }
 
-    const handleClickDelete = () => {
-        setSaveImg(false)
+    const handleClickDelete = async () => {
+        const saveImgUser = await userApi.savePublication(publicationSave?._id, false)
+        console.log(saveImgUser.data.body.savedImg, saveImgUser.data.body._id, 'handleClickDelete');
+        setSaveImg(saveImgUser.data.body.savedImg)
     }
 
-    const axiosData = useCallback(async () => {
-        // let localStorageId = JSON.parse(localStorage.getItem('user'))
-        // await setUserLocalStorage(JSON.parse(localStorage.getItem('user')))
-        // const formData = {
-        //     idImage: dataModal?._id,
-        //     idUserSaveImg: userLocalStorage?._id,
-        //     idUserCreateImg: user?._id,
-        //     imageId: dataModal?.imageId
-        // }
-        // // setForm({ userLocalStorage?._id, dataModal?.imageId, user?._id })
-        // const foundSaveImg = await userApi.getSaveImg(formData)
-    }, [])
+    // const axiosData = useCallback(async () => {
+    //     setUserLocalStorage(JSON.parse(localStorage.getItem('user')))
+    // }, [])
 
-    console.log(dataModal);
+    let idImg = Date.now()
+
     useEffect(() => {
-        axiosData()
-    }, [axiosData])
+        // axiosData()
+        setSaveImg(publicationSave?.savedImg)
+    }, [publicationSave?.imageId])
+
 
     return (
         <div>
@@ -69,54 +67,68 @@ const ModalInfoCanva = ({ handleClose, open, dataModal, user }) => {
                             alt='img'
                         />
                     </Grid>
-                    <Grid item xs={2}>
-                        <Box sx={{ width: '100%', mt: '5%', mb: '55%', textAlign: 'center' }}>
-                            <Link href={{
-                                pathname: `/profile/[id]/inbox/[idMsg]`,
-                                query: { id: user?._id, img: dataModal?.imageId }
-                            }}><a>
-                                    <IconButton >
-                                        <ChatIcon className='iconModal' />
-                                    </IconButton>
-                                    <Typography variant='h6'>Chat</Typography>
-                                </a>
-                            </Link>
-                        </Box>
-                        <Box sx={{ width: '100%', mb: '55%', textAlign: 'center' }}>
-                            <Link href={{
-                                pathname: '/profile/[id]',
-                                query: { id: user?._id }
-                            }} ><a>
-                                    <IconButton >
-                                        <AccountCircleIcon className='iconModal' />
-                                    </IconButton>
-                                    <Typography variant='h6'>Perfil</Typography>
-                                </a>
-                            </Link>
-                        </Box>
-                        {
-                            saveImg ?
-                                <Box sx={{ width: '100%', textAlign: 'center' }} >
-                                    <IconButton onClick={handleClickDelete}>
-                                        <BookmarkIcon sx={{ color: 'red', width: 45, height: 45 }} />
-                                    </IconButton>
-                                    <Typography variant='h6' >Guardar</Typography>
+                    {user !== null
+                        ?
 
+                        <>
+                            <Grid item xs={2}>
+                                <Box sx={{ width: '100%', mt: '5%', mb: '55%', textAlign: 'center' }}>
+                                    <Link href={{
+                                        pathname: `/profile/[id]/inbox/[idMsg]`,
+                                        query: { id: user?._id, idMsg: dataModal?.imageId ? dataModal.imageId : idImg }
+                                    }}><a>
+                                            <IconButton >
+                                                <ChatIcon className='iconModal' />
+                                            </IconButton>
+                                            <Typography variant='h6'>Chat</Typography>
+                                        </a>
+                                    </Link>
                                 </Box>
-                                :
-                                <Box sx={{ width: '100%', textAlign: 'center' }}>
-                                    <IconButton onClick={handleClick}>
-                                        <TurnedInNotIcon className='iconModal' />
-                                    </IconButton>
-                                    <Typography variant='h6' >Guardar</Typography>
+                                <Box sx={{ width: '100%', mb: '55%', textAlign: 'center' }}>
+                                    <Link href={{
+                                        pathname: '/profile/[id]',
+                                        query: { id: user?._id }
+                                    }} ><a>
+                                            <IconButton >
+                                                <AccountCircleIcon className='iconModal' />
+                                            </IconButton>
+                                            <Typography variant='h6'>Perfil</Typography>
+                                        </a>
+                                    </Link>
+                                </Box>
+                                {
+                                    saveImg ?
+                                        <Box sx={{ width: '100%', textAlign: 'center' }} >
+                                            <IconButton onClick={handleClickDelete}>
+                                                <BookmarkIcon sx={{ color: 'red', width: 45, height: 45 }} />
+                                            </IconButton>
+                                            <Typography variant='h6' >Guardar</Typography>
 
-                                </Box>
-                        }
-                    </Grid>
+                                        </Box>
+                                        :
+                                        <Box sx={{ width: '100%', textAlign: 'center' }}>
+                                            <IconButton onClick={handleClick}>
+                                                <TurnedInNotIcon className='iconModal' />
+                                            </IconButton>
+                                            <Typography variant='h6' >Guardar</Typography>
+
+                                        </Box>
+                                }
+                            </Grid>
+                        </>
+                        :
+                        <Grid item xs={2}>
+                            <Typography variant='h6'>El usuario ya no existe</Typography>
+                        </Grid>
+                    }
                     <Grid item xs={5}>
                         <Box className='boxModal' sx={{ p: 2 }}>
-                            <Typography variant='h5' sx={{ p: 2, textAlign: 'center' }}>{user?.nickName} {user?.lastName}</Typography>                            <Typography variant='h8'>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            <Typography variant='h4' sx={{ p: 2, textAlign: 'center' }}>nickname: {user?.nickName}</Typography>
+                            <Typography variant='h4' sx={{ p: 2, textAlign: 'center' }}>{user?.firstName} {user?.lastName}</Typography>
+
+                            <Typography variant='h6'>
+                                Descripcion:
+                                {dataModal?.description}
                             </Typography>
 
 

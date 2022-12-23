@@ -12,11 +12,20 @@ import { useRouter } from 'next/router';
 import { height } from '@mui/system';
 import ModalSettings from './ModalSettings';
 import ModalUploadImg from './ModalUploadImg';
+import ModalViewImgProfile from './ModalViewImgProfile'
 import { userApi } from '../pages/api/user';
 
 
 export default function Profile() {
     const [user, setUser] = useState()
+    const [userImgSave, setUserImgSave] = useState()
+    const [image, setImage] = useState()
+    const [publicationSave, setPublicationSave] = useState()
+
+
+    const [publication, setPublication] = useState(true)
+    const [openViewImg, setOpenViewImg] = useState(false)
+
     const [userLocalStorage, setUserLocalStorage] = useState()
 
     const [open, setOpen] = useState(false);
@@ -24,52 +33,100 @@ export default function Profile() {
 
     const router = useRouter()
 
-    const handleOpenUploadImg = () => {
-        setOpenUploadImg(true);
-    }
-
-    const handleCloseUploadImg = () => setOpenUploadImg(false);
-
-
     const handleOpen = () => {
         setOpen(true);
     }
     const handleClose = () => setOpen(false);
 
-    // const fetchData = useCallback(async () => {
-    //     const typeUser = router.query.type
-    //     const idUser = parseInt(router.query.id)
-    //     const resLienzo = await fetch('/api/dummyDataLienzo')
-    //     const resArtist = await fetch('/api/dummyData')
-    //     const dataLienzo = await resLienzo.json()
-    //     const dataArtisti = await resArtist.json()
-    //     if (typeUser === 'artista') {
-    //         const newData = dataArtisti.find((user) => {
-    //             return user.artistId === idUser
-    //         })
-    //         setDummyData(newData)
+    const handleOpenUploadImg = () => {
+        setOpenUploadImg(true);
+    }
+    const handleCloseUploadImg = () => setOpenUploadImg(false);
 
-    //     } else {
-    //         const newData = dataLienzo.find((user) => {
-    //             return user.lienzoId === idUser
-    //         })
-    //         setDummyData(newData)
-    //     }
-    // }, [router])
+    const handleOpenViewImg = async (img) => {
+        if (img.idUserCreateImg) {
+            const foundUser = await userApi.getOneUser(img.idUserCreateImg)
+            if (foundUser?.status === 200) {
+                setImage(img)
+                setUserImgSave(foundUser?.body)
+                setOpenViewImg(true);
+                const formData = {
+                    idImage: img?._id,
+                    idUserSaveImg: userLocalStorage?._id,
+                    idUserCreateImg: foundUser?.body?._id,
+                    imageId: img?.imageId
+                }
+                const foundSaveImg = await userApi.getImgSave(formData)
+            }
+        } else {
+            const foundUser = await userApi.getOneUser(img.userPost)
+            if (foundUser?.status === 200) {
+                setImage(img)
+                setUserImgSave(foundUser?.body)
+                setOpenViewImg(true);
+                const formData = {
+                    idImage: img?._id,
+                    idUserSaveImg: userLocalStorage?._id,
+                    idUserCreateImg: foundUser?.body?._id,
+                    imageId: img?.imageId
+                }
+                const foundSaveImg = await userApi.getImgSave(formData)
+
+
+            }
+        }
+
+    }
+
+    const handleCloseViewImg = () => setOpenViewImg(false);
+
+
+    const handleClickFalse = () => {
+        setPublication(false)
+    }
+    const handleClickTrue = () => {
+        setPublication(true)
+    }
+
+    const handleDeleteUser = async () => {
+        if (user.appRole === 'canva') {
+            const res = await userApi.deleteUserCanva(user._id)
+            if (res?.data?.status === 200) {
+                localStorage.setItem("user", '')
+                localStorage.setItem("token", '')
+                router.push('/')
+            }
+
+        } else {
+            const res = await userApi.deleteUserArtist(user._id)
+            if (res?.data?.status === 200) {
+                localStorage.setItem("user", '')
+                localStorage.setItem("token", '')
+                router.push('/')
+            }
+
+        }
+    }
+
+    const handleLogout = async () => {
+        localStorage.setItem("user", '')
+        localStorage.setItem("token", '')
+        router.push('/')
+    }
+
     const fetchData = useCallback(async () => {
         setUserLocalStorage(JSON.parse(localStorage.getItem('user')))
         const idUser = router.query.id
         const resUser = await userApi.getOneUser(idUser)
-        console.log(resUser, 'resUser');
-
-        setUser(resUser)
+        setUser(resUser?.body)
     }, [router])
+
+    let idImg = Date.now()
 
     useEffect(() => {
         fetchData();
     }, [fetchData])
 
-    console.log(user);
     return (
         <>
             <ModalSettings
@@ -79,6 +136,14 @@ export default function Profile() {
             />
             <ModalUploadImg handleCloseUploadImg={handleCloseUploadImg}
                 openUploadImg={openUploadImg}
+            />
+            <ModalViewImgProfile handleCloseViewImg={handleCloseViewImg}
+                openViewImg={openViewImg}
+                user={user}
+                userImgSave={userImgSave}
+                image={image}
+                userLocalStorage={userLocalStorage}
+                publicationSave={publicationSave}
             />
             <Box sx={{ mx: 40, mb: 2, borderBottom: 1 }}>
                 <Grid container>
@@ -115,31 +180,51 @@ export default function Profile() {
                                     </a></Link>
                             </Grid> */}
                         </>
-                        :
-                        <>
-                            <Grid item xs={2}>
-                                <Avatar
-                                    alt={user?.nickName}
-                                    src={`https://azoromi-img.s3.sa-east-1.amazonaws.com/imgUpload/${user?.imagesProfile}.jpg`}
-                                    sx={{ width: 100, height: 100 }}
-                                />
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Box>
-                                    <Typography variant='h4'>
-                                        Artista
-                                    </Typography>
-                                    <Typography variant='h6'>
-                                        Soy el artista {user?.lastName}{user?.firstName}
-                                    </Typography>
-                                    <Typography variant='h6'>
-                                        {user?.nickName}
-                                    </Typography>
-                                </Box>
-                            </Grid>
+                        : user?.appRole === 'artist'
+                            ?
+                            <>
+                                <Grid item xs={2}>
+                                    <Avatar
+                                        alt={user?.nickName}
+                                        src={`https://azoromi-img.s3.sa-east-1.amazonaws.com/imgUpload/${user?.imagesProfile}.jpg`}
+                                        sx={{ width: 100, height: 100 }}
+                                    />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Box>
+                                        <Typography variant='h4'>
+                                            Artista
+                                        </Typography>
+                                        <Typography variant='h6'>
+                                            {user?.lastName} {user?.firstName}
+                                        </Typography>
+                                        <Typography variant='h6'>
+                                            {user?.nickName}
+                                        </Typography>
+                                        <Typography variant='h6'>
+                                            {user?.genre}
+                                        </Typography>
+                                    </Box>
+                                </Grid>
 
-                        </>
+                            </>
+                            :
+                            <>
+                                <Grid item xs={2}>
+                                    <Avatar
+                                        alt={user?.nickName}
 
+                                    />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Box>
+                                        <Typography variant='h4'>
+                                            El usuario a eliminado su cuenta
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+
+                            </>
                     }
                     {
                         user?._id === userLocalStorage?._id
@@ -167,8 +252,11 @@ export default function Profile() {
                                                     Cambiar contraseña
                                                 </Button>
                                             </Link>
-                                            <Button sx={{ textTransform: 'capitalize', borderBottom: 1 }}>
-                                                Cerrar seccion
+                                            <Button sx={{ textTransform: 'capitalize', borderBottom: 1 }} onClick={handleLogout}>
+                                                Cerrar sesion
+                                            </Button>
+                                            <Button sx={{ textTransform: 'capitalize', borderBottom: 1 }} onClick={handleDeleteUser}>
+                                                Eliminar cuenta
                                             </Button>
                                         </AccordionDetails>
                                     </Accordion>
@@ -176,9 +264,15 @@ export default function Profile() {
                             </>
                             :
                             <Grid item xs={2}>
-                                <Button ca variant="outlined" size="small" sx={{ mt: 0.7, float: 'right' }}>
-                                    <Typography variant='caption' sx={{ textTransform: 'capitalize', color: 'black' }}>Enviar mensaje</Typography>
-                                </Button>
+                                <Link href={{
+                                    pathname: `/profile/[id]/inbox/[idMsg]`,
+                                    query: { id: user?._id, idMsg: idImg }
+                                }} ><a>
+                                        <Button ca variant="outlined" size="small" sx={{ mt: 0.7, float: 'right' }}>
+                                            <Typography variant='caption' sx={{ textTransform: 'capitalize', color: 'black' }}>Enviar mensaje</Typography>
+                                        </Button>
+                                    </a>
+                                </Link>
                             </Grid>
                     }
                 </Grid>
@@ -186,7 +280,7 @@ export default function Profile() {
             <Box sx={{ mb: 2, mx: 70 }}>
                 <Grid container >
                     <Grid item xs={6}>
-                        <Button>
+                        <Button onClick={handleClickTrue}>
                             <GridOnIcon />Publicaciones
                         </Button>
                     </Grid>
@@ -194,7 +288,7 @@ export default function Profile() {
                         user?._id === userLocalStorage?._id
                         &&
                         <Grid item xs={6}>
-                            <Button>
+                            <Button onClick={handleClickFalse}>
                                 <TurnedInNotIcon />Guardados
                             </Button>
 
@@ -202,21 +296,50 @@ export default function Profile() {
                     }
                 </Grid>
             </Box>
-            <Box className='gridContainerProfile' sx={{ mx: 40 }}>
-                {user?.imagesWork?.map((img, index) => {
-                    return (
-                        <Button className='buttonImgProfile' key={index}>
-                            < img
-                                className='imgProfile'
-                                src={`https://azoromi-img.s3.sa-east-1.amazonaws.com/imgUpload/${img?.imageId}.jpg`}
-                                width={200}
-                                height={200}
-                                alt='img'
-                            />
-                        </Button>
-                    )
-                })}
-            </Box>
+            {
+                publication ?
+                    <Box className='gridContainerProfile' sx={{ mx: 40 }}>
+                        {user?.imagesWork?.map((img, index) => {
+                            return (
+                                <>
+                                    {
+                                        !img.isDeleted &&
+                                        <Button className='buttonImgProfile' key={index} onClick={() => handleOpenViewImg(img)}>
+                                            < img
+                                                className='imgProfile'
+                                                src={`https://azoromi-img.s3.sa-east-1.amazonaws.com/imgUpload/${img?.imageId}.jpg`}
+                                                width={200}
+                                                height={200}
+                                                alt='img'
+                                            />
+                                        </Button>
+                                    }
+                                </>
+                            )
+                        })}
+                    </Box>
+                    :
+                    <Box className='gridContainerProfile' sx={{ mx: 40 }}>
+                        {user?.imgSave?.map((img, index) => {
+                            return (
+                                <>
+                                    {
+                                        img.savedImg &&
+                                        <Button className='buttonImgProfile' key={index} onClick={() => handleOpenViewImg(img)}>
+                                            < img
+                                                className='imgProfile'
+                                                src={`https://azoromi-img.s3.sa-east-1.amazonaws.com/imgUpload/${img?.imageId}.jpg`}
+                                                width={200}
+                                                height={200}
+                                                alt='img'
+                                            />
+                                        </Button>
+                                    }
+                                </>
+                            )
+                        })}
+                    </Box>
+            }
 
         </>
     )

@@ -8,16 +8,27 @@ import { userApi } from '../pages/api/user';
 
 
 export default function Artist() {
-    const [dummyData, setDummyData] = useState([])
     const [dataModal, setDataModal] = useState({ artistId: '', artistName: '', artistLastName: '', artistStyle: [], img: '' })
     const [open, setOpen] = useState(false);
     const [imgArtist, setImgArtist] = useState([])
     const [user, setUser] = useState()
+    const [userLocalStorage, setUserLocalStorage] = useState()
+    const [publicationSave, setPublicationSave] = useState()
 
     const handleOpen = async (image) => {
         const resArtist = await userApi.getOneArtist(image.userPost)
         if (resArtist?.data.status === 200) {
+            const formData = {
+                idImage: image?._id,
+                idUserSaveImg: userLocalStorage?._id,
+                idUserCreateImg: resArtist.data.body?._id,
+                imageId: image?.imageId
+            }
 
+            const foundSaveImg = await userApi.createSaveImg(formData)
+            if (foundSaveImg?.data.status === 200) {
+                setPublicationSave(foundSaveImg?.data.body)
+            }
         }
         setUser(resArtist?.data.body)
         setDataModal(image)
@@ -26,6 +37,7 @@ export default function Artist() {
     const handleClose = () => setOpen(false);
 
     const fetchData = async () => {
+        setUserLocalStorage(JSON.parse(localStorage.getItem('user')))
         const res = await userApi.getAllArtist()
         setImgArtist(res?.data.body)
     }
@@ -41,9 +53,10 @@ export default function Artist() {
                 open={open}
                 dataModal={dataModal}
                 user={user}
+                publicationSave={publicationSave}
             />
             <Box className='gridContainer'>
-                {imgArtist.map((image) => {
+                {imgArtist?.map((image) => {
                     return (
                         <List key={image._id}>
                             <Button className='buttonImg' onClick={() => handleOpen(image)}>

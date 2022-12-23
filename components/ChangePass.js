@@ -94,7 +94,7 @@ export default function ChangePass() {
                     </Grid>
                 </Grid>
             </Box >
-            <Typography variant='h6' sx={{ textAlign: 'center', mt: 5, }}>Recupere su contraseña de manera rapida y segura</Typography>
+            <Typography variant='h6' sx={{ textAlign: 'center', mt: 5, }}>Cambie su contraseña de manera rapida y segura</Typography>
             <Typography variant='h6' sx={{ textAlign: 'center', mb: 3 }}>Ingrese su correo y le enviaremos un codigo con el cual podra cambiar su contraseña</Typography>
 
             <Box sx={{ textAlign: 'center', mx: 45, border: '1px solid black', borderRadius: 5, background: 'rgb(236, 236, 236)' }}>

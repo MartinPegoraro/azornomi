@@ -10,6 +10,8 @@ export default function Canva() {
     const [open, setOpen] = useState(false);
     const [dummyData, setDummyData] = useState([])
     const [imgCanvas, setImgCanvas] = useState([])
+    const [userLocalStorage, setUserLocalStorage] = useState()
+    const [publicationSave, setPublicationSave] = useState()
 
     // const [dataModal, setDataModal] = useState({ lienzoId: '', lienzoName: '', lienzoLastName: '', preference: [], img: '' })
     const [dataModal, setDataModal] = useState()
@@ -18,12 +20,27 @@ export default function Canva() {
 
     const handleOpen = async (image) => {
         const resCanva = await userApi.getOneCanva(image.userPost)
+        if (resCanva?.data.status === 200) {
+            const formData = {
+                idImage: image?._id,
+                idUserSaveImg: userLocalStorage?._id,
+                idUserCreateImg: resCanva.data.body?._id,
+                imageId: image?.imageId
+            }
+            const foundSaveImg = await userApi.createSaveImg(formData)
+            if (foundSaveImg?.data.status === 200) {
+                setPublicationSave(foundSaveImg?.data.body)
+            }
+        }
         setUser(resCanva?.data.body)
         setDataModal(image)
         setOpen(true);
     }
+
     const handleClose = () => setOpen(false);
+
     const fetchData = async () => {
+        setUserLocalStorage(JSON.parse(localStorage.getItem('user')))
         const res = await userApi.getAllCanva()
         setImgCanvas(res?.data.body)
     }
@@ -39,6 +56,7 @@ export default function Canva() {
                 open={open}
                 dataModal={dataModal}
                 user={user}
+                publicationSave={publicationSave}
             />
             <Box className='gridContainer'>
                 {imgCanvas?.map((image) => {

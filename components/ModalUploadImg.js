@@ -44,6 +44,7 @@ const ModalUpImg = ({ openUploadImg, handleCloseUploadImg }) => {
                     setImg(undefined)
                     setState(false)
                     handleCloseUploadImg()
+                    location.reload()
                 }, 1500)
             }
         } else {

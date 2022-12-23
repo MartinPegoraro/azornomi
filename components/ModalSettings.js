@@ -2,6 +2,11 @@ import React, { useState } from 'react'
 import { Typography, Box, Modal, Grid, IconButton, Button, TextField, Alert } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/AddPhotoAlternate';
 
+
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
 import Link from 'next/link';
 import { userApi } from '../pages/api/user';
 import { imgApi } from '../pages/api/img';
@@ -9,12 +14,11 @@ import { imgApi } from '../pages/api/img';
 
 const ModalSettings = ({ open, handleClose, user }) => {
     const [img, setImg] = useState(undefined)
-    const [formData, setFormData] = useState({ lastName: '', firstName: '', nickName: '', genre: '', genderTatoo: '' })
+    const [formData, setFormData] = useState({ lastName: user?.lastName, firstName: user?.firstName, nickName: user?.nickName, genre: user?.genre, genderTatoo: user?.genderTatoo })
     const [imgUrl, setImgUrl] = useState('')
     const [idImage, setIdImage] = useState('')
     const [state, setState] = useState(false)
     const [savedCorrectly, setSavedCorrectly] = useState(false)
-
 
     const handleChange = (e) => {
         setImgUrl(e.target.files[0])
@@ -49,7 +53,12 @@ const ModalSettings = ({ open, handleClose, user }) => {
         }
     }
 
-    const handleClick = async () => {
+
+    const handleChangeSelect = (event) => {
+        setAge(event.target.value);
+    };
+    const handleClick = async (e) => {
+        e.preventDefault()
         if (user.appRole === 'canva') {
             const res = await userApi.updateCanva(user, formData)
             if (res?.data?.status === 200) {
@@ -72,6 +81,7 @@ const ModalSettings = ({ open, handleClose, user }) => {
                     setSavedCorrectly(false)
                     handleClose()
                     setFormData('')
+                    location.reload()
                 }, 1500)
             } else {
                 console.log('error');
@@ -99,6 +109,7 @@ const ModalSettings = ({ open, handleClose, user }) => {
                                     <TextField
                                         onChange={onInputChange}
                                         name='firstName'
+                                        label={user?.firstName}
                                         value={formData.firstName}
                                         size='small'
                                         sx={{ width: '50%', mb: 2, display: 'inline' }}
@@ -117,6 +128,7 @@ const ModalSettings = ({ open, handleClose, user }) => {
                                     <TextField
                                         onChange={onInputChange}
                                         name='lastName'
+                                        label={user?.lastName}
                                         value={formData.lastName}
                                         size='small'
                                         sx={{ width: '50%', mb: 2, display: 'inline' }}
@@ -136,6 +148,7 @@ const ModalSettings = ({ open, handleClose, user }) => {
                                     <TextField
                                         onChange={onInputChange}
                                         name='nickName'
+                                        label={user?.nickName}
                                         value={formData.nickName}
                                         size='small'
                                         sx={{ width: '50%', mb: 2, display: 'inline' }}
@@ -151,15 +164,33 @@ const ModalSettings = ({ open, handleClose, user }) => {
                                     <Typography variant='caption' sx={{ width: '50%', display: 'inline-block' }} >Genero</Typography>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <TextField
+                                    <InputLabel  >
+                                        Seleccionar
+                                    </InputLabel>
+                                    <Select
+                                        sx={{ height: 25 }}
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={formData.genre}
+                                        name='genre'
+                                        label={user?.genre}
+                                        onChange={onInputChange}
+                                    >
+
+                                        <MenuItem value='Hombre'>Hombre</MenuItem>
+                                        <MenuItem value='Mujer'>Mujer</MenuItem>
+                                    </Select>
+
+                                    {/* <TextField
                                         onChange={onInputChange}
                                         name='genre'
+                                        label={user?.genre}
                                         value={formData.genre}
                                         size='small'
                                         sx={{ width: '50%', mb: 2, display: 'inline' }}
                                         id="outlined-password-input"
                                         autoComplete="current-password"
-                                    />
+                                    /> */}
                                 </Grid>
                             </Grid>
                         </Grid>
